@@ -355,21 +355,44 @@ Tramite questi eventi l'azienda è in grado di fornire al cliente varie informaz
 \item I contenuti più visti
 \item I contenuti più cliccati
 \end{itemize}
-Mentre è facile capire che i contenuti più proposti siano i contenuti caricati più volte dai widget di raccomandazione, è importante capire la differenza tra visto e cliccato. Per contenuto visto (impression) si intende un contenuto proposto dal PCR e che è entrato nella \gloss{viewport} dell'utente finale (ma che non necessariamente l'utente ci ha interagito). Per contenuto cliccato si intende un contenuto visto dall'utente in più su cui quest'ultimo ha fatto un click per aprirlo.\\
+Mentre è facile capire che i contenuti più proposti siano i contenuti caricati più volte dai widget di raccomandazione (ovvero contenuti caricati nella pagina web), è importante capire la differenza tra visto e cliccato. Per contenuto visto (impression) si intende un contenuto proposto dal PCR e che è entrato nella \gloss{viewport} dell'utente finale (ma che non necessariamente l'utente ci ha interagito). Per contenuto cliccato si intende un contenuto visto dall'utente in più su cui quest'ultimo ha fatto un click per aprirlo.\\
 Infatti i widget di raccomandazione contengono una lista di contenuti con una \gloss{thumbnail} e una breve descrizione, per aprire il contenuto vero e proprio l'utente può cliccarci sopra. Figura x TODO img pcr\\
 % parlare del click through rate (e dei casi limite) e dei vincoli imposti forse
 Durante l'analisi si è capito che la sola azione di caricare il contenuto dal widget (evento load) non portava necessariamente informazioni molto utili poiché se un contenuto non è neanche entrato nella viewport dell'utente si può non contare proprio così abbiamo deciso di tracciare questo evento per avere più informazioni magari in futuro ma per ora ci concentreremo più sugli altri due eventi.\\
 Abbiamo infatti, dopo brainstorming e ricerche in internet, trovato una metrica che dasse un indicazione soddisfacente dell'efficacia di un contenuto, questa metrica si chiama \textbf{click through rate}. In pratica è un valore calcolato dal rapporto del numero di interazioni con il contenuto per il numero di viste (clicks fratto impressions). Un valore alto infatti sta ad indicare che il contenuto è stato aperto molte volte, se non la totalità, rispetto alle volte in cui è stato visto. Questo fatto indicherebbe che il contenuto raccomandato è interessante per quasi tutti gli utenti a cui è stato proposto indicando un ottimo lavoro da parte del motore di raccomandazione. Valori invece molto bassi di questo indice significherebbero che il contenuto è stato visto molte volte ma aperto poche, quindi provocando scarso interesse da parte degli utenti finali.\\
-Si è deciso quindi che questo fosse uno dei valori, per ogni contenuto, da presentare al cliente, però eliminando i casi particolari come gli elementi con un numero di visite al di sotto di una certa soglia. Questo perché uno scarso numero di visite e pochi click avrebbe comunque un click through rate più alto di contenuti magari più significativi. Per esempio un conteuto con 3 click e 4 impression avrebbe un click through rate di 0.75, indice molto alto, mentre un contenuto con 1000 impression e 500 click avrebbe un click through rate di 0.5, il che porterebbe a pensare che il contenuto sia molto meno interessante ma è molto probabile che in realtà sia il contrario perché con numeri molto bassi è facile avere un rapporto alto e non veritiero.
+Si è deciso quindi che questo fosse uno dei valori, per ogni contenuto, da presentare al cliente, però eliminando i casi particolari come gli elementi con un numero di visite al di sotto di una certa soglia. Questo perché uno scarso numero di visite e pochi click avrebbe comunque un click through rate più alto di contenuti magari più significativi. Per esempio un conteuto con 3 click e 4 impression avrebbe un click through rate di 0.75, indice molto alto, mentre un contenuto con 1000 impression e 500 click avrebbe un click through rate di 0.5, il che porterebbe a pensare che il contenuto sia molto meno interessante ma è molto probabile che in realtà sia il contrario perché con numeri molto bassi è facile avere un rapporto alto e non veritiero.\\
+Tutte queste considerazioni valgono non solo per contenuti caricati dal widget di raccomandazioni ma per qualunque contenuto THRON messo in pagina. Questo è stato motivo di ulteriore stimolo poiché erano funzionalità aggiunte non solo per uno specifico progetto ma che saranno riutilizzate in futuro in altri progetti dell'azienda.
 
-\subsubsection{La libreria dei tracciamenti}
+\subsubsection{Tracciamento eventi - libreria dei tracciamenti}
 Per raccogliere le informazioni necessarie Thron usa una libreria javascript che espone dei metodi per tracciare eventi. Questa libreria deve essere inclusa nelle pagine web o applicazioni e aggiunta in pagina la logica per tracciare queste informazioni. Un esempio banale: se si volesse acquisire l'informazione di quante volte viene aperta la scheda di un contenuto in un sito di e-commerce basterebbe lanciare un evento load al caricamento della pagina relativa dell'oggetto da vendere sul contenuto di tipo immagine relativo all'oggetto.\\
-La libreria dei tracciamenti Thron supportava diversi eventi da loro già tracciati, tuttavia non disponeva di metodi per tracciare impressions e clicks perciò era necessario aggiungere queste funzionalità. Mi è stato proposto di effettuare io stesso queste aggiunte e ho accettato subito poichè andava ad aumentare ancor di più l'arricchimento personale che cercavo.\\
+La libreria dei tracciamenti Thron supportava diversi eventi da loro già tracciati, tuttavia non disponeva di metodi per tracciare impressions e clicks perciò era necessario aggiungere queste funzionalità. Mi è stato proposto di effettuare io stesso queste aggiunte e ho accettato poiché andava ad aumentare ancor di più l'arricchimento personale che cercavo.\\
+Inoltre si è scelto di aggiungere alla libreria la logica per tracciare questi eventi in automatico, cioè senza aggiunte di codice lato client in pagina, per facilitare ulteriormente i tracciamenti non solo per il \gloss{widget} raccomandativo ma anche per qualunque altra pagina web che necessiti di tracciare eventi come click, load, impression o altri eventi che verranno aggiunti in futuro.\\
 Questo ha provocato una modifica al mio piano di lavoro immettendo qualche giorno di lavoro (stimati cinque) per studiare la libreria dei tracciamenti, le tecnologie utilizzate, progettare come apportare le modifiche e svilupparle prima dello sviluppo del resto del progetto.\\
+
+\subsubsection{Raccolta ed elaborazione dati tracciamenti}
+La libreria dei tracciamenti di THRON utilizza \gloss{snowplow}, una libreria atta appunto a tracciare eventi anche personalizzati. Grazie a questa tecnologia tutti i dati relativi ai tracciamenti restano proprietari dell'azienda al contrario di altri servizi di tracciamenti come Google Analytics. Il vantaggio di snowplow è sicuramente il fatto di essere proprietari di tutti i dati tracciati e la totale personalizzazione che si può fare, sia negli eventi da tracciare sia nelle fasi successive di elaborazione di questi dati. Il lato negativo è che bisogna scriversi tutto il codice necessario per gli eventi personalizzati e scrivere il codice dei software che ricevono i tracciamenti, che gli elaborano e che li mettono a disposizione di eventuali client.\\
+I dati tracciati dalla libreria javascript presente in tutte le pagine necessarie vengono raccolti in un collector che può essere visto come un calderone in cui arrivano e vengono raggruppati tutti gli eventi tracciati.
+Questi dati vengono letti da un enricher, realizzato con \gloss{Apache Spark}, che si occupa di arricchirli con altre informazioni, ad esempio viene effettuato il \gloss{merge} dei contatti, questo va a rendere possibili filtraggi molto mirati e analisi di dati per strategie business impossibili altrimenti.\\
+%TODO AGGIUNGERE IMG snowplow
+I dati a questo punto vengono elaborati ulteriormente da diversi enricher (altre istanze Spark) ed ognuno aggiunge informazioni utili per diversi scopi. Al momento ne hanno tre:
+\begin{itemize}
+\item Recommendation: questo contiene tutta la logica per la raccomandazione dei contenuti e l'aggiunta di importanti informazioni
+\item Behaviour: questo serve per analizzare il comportamento degli utenti 
+\item Reports: questo serve per arricchire con moltissimi dati gli eventi per rendere possibile la fruizione di informazioni utili per business strategy
+\end{itemize}
+Tutte queste istanze salvano poi i dati in diversi Elasticsearch che possono essere interrogati da web services appositi dall'esterno.\\
+Andando ad aggiungere nuovi eventi è necessario modificare il primo enricher comune per aggiungere il support a questi nuovi eventi. Per i tre enricher specifici invece è necessario effettuare queste modifiche:
+\begin{itemize}
+\item Recommendation: filtrare i nuovi eventi, per ora gli algoritmi di raccomandazione non utilizzeranno impressions e interacts. Questa è una modifica che sarà effettuata nel prossimo futuro poiché non banale da applicare. Infatti il recommendation utilizza algoritmi di machine learning per essere più preciso ed efficiente
+\item Behaviour: anche in questo caso filtrare i nuovi eventi, come per il recommendation sono modifiche da applicare con molta cautela in algoritmi delicati e lo stage non prevede abbastanza tempo
+\item Reports: qui al contrario bisogna fare in modo che i nuovi eventi vengano letti, elaborati ed arricchiti con tutte le informazioni necessarie. Inoltre i dati che vengono salvati su Elasticsearch è necessario indicizzarli raggruppandoli per tipo di evento per maggiore ordine
+\end{itemize}
+I web services per ricavare questi di dati verranno sviluppati da altri membri del team di Intelligence essendo presenti già servizi molto simili sono modifiche che applicheranno molto velocemente.
 
 \subsection{Analisi fase 2}
 Successivamente ho partecipato a delle riunioni col team Core per capire come rendere disponibili ai clienti i dati relativi alla quantità di raccomandazioni fatte dalle loro applicazioni. Questo è molto importante poiché i clienti al momento dell'acquisto dello strumento di raccomandazioni possono scegliere diversi Business Model che prevedono una quantità di raccomandazioni massima prefissata. Superata questa soglia lo strumento non raccomanda più secondo algoritmi intelligenti ma propone solo contenuti simili.\\
-THRON possiede un \gloss{Elasticsearch} in cui vengono immagazzinati tutti gli accessi a tutte le loro API. Tuttavia questi dati vengono salvati per un massimo di sessante giorni poiché la mole di dati è non indifferente (si parla di almeno quattro gigabyte di log di accessi al giorno senza contare le fuizioni delle loro \gloss{cdn}).\\I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari andasse ad interrogare l'Elasticsearch di monitoring, ricavasse tutte le informazioni riguardanti gli accessi alle raccomandazioni e le andasse a salvare in qualche altro database. Per rendere poi questi dati accessibili all'esterno della rete aziendale è necessario anche creare dei webservices da aggiungere a quelli già esistenti in THRON. Questo lavoro mi era di molto facilitato grazie al fatto che ci fossero già molti altri webservices, infatti potevo riutilizzare molti componenti già esistenti come il meccanismo di autenticazione e molto altro.
+THRON possiede un \gloss{Elasticsearch} in cui vengono immagazzinati tutti gli accessi a tutte le loro API. Tuttavia questi dati vengono salvati per un massimo di sessanta giorni poiché la mole di dati è non indifferente (si parla di almeno quattro gigabyte di log di accessi al giorno contando solo gli accessi alle API, senza contare quindi le fruizioni delle loro \gloss{cdn}).\\I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari andasse ad interrogare l'Elasticsearch di monitoring, ricavasse tutte le informazioni riguardanti gli accessi alle raccomandazioni e le andasse a salvare in qualche altro database.\\I grafici potranno avere una granularità oraria, giornaliera o mensile dovranno essere quindi salvati i dati raggruppati per queste granularità per avere un output immediato.\\Per rendere poi questi dati accessibili all'esterno della rete aziendale è necessario anche creare dei webservices da aggiungere a quelli già esistenti in THRON. Questo lavoro mi era di molto facilitato grazie al fatto che ci fossero già molti altri webservices, infatti potevo riutilizzare molti componenti già esistenti come il meccanismo di autenticazione e meccanismi di accesso ai database.\\
+Essendo la quantità di dati elevata di è deciso, qual'ora il tempo lo permettesse, di aggiungere anche un servizio che andasse a ripulire i dati più vecchi di due anni con granularità maggiore di quella mensile.
 
 \subsection{Analisi fase 3}
 Infine sono state fatte le analisi per discutere come presentare questi dati ai clienti.\\
@@ -377,14 +400,15 @@ col team di design si sono scelti i tipi dei grafici da presentare per ottenere 
 Col team UX si è discusso invece di come integrare questi grafici nel loro software in cui sono già presenti molti grafici per la presentazione di informazioni di Intelligence. TODO aggiungere img grafici intelligente\\
 
 
-\subsection{Requisiti}
-Dopo tutta la fase di analisi sono emersi i seguenti requisiti definitivi
+\subsection{Obiettivi}
+Dopo tutta la fase di analisi sono emersi i seguenti obiettivi
 
 \subsubsection{Fase 1}
 \textbf{Obbligatori:}
 \begin{itemize}
 \item Dovrà essere aggiunta la funzionalità di tracciare impression nella libreria dei tracciamenti
 \item Dovrà essere aggiunta la funzionalità di tracciare click nella libreria dei tracciamenti
+\item Dovrà essere aggiunto un meccanismo per tracciare eventi come click, load e impression in automatico.
 \item Le modifiche da apportare alla libreria dei tracciamenti dovranno mantenere una retro compatibilità totale
 \item Tutte le modifiche devono essere supportate nelle seguenti versioni dei browsers:
 	\begin{itemize}
@@ -395,31 +419,86 @@ Dopo tutta la fase di analisi sono emersi i seguenti requisiti definitivi
 	\item Android 4.1 e successivi: Chrome tutte le versioni
 	\item IOS 4.x e successivi: Safari 4 e successivi, Chrome tutte le versioni
 	\end{itemize}
+	%no
+\item Dovrà essere modificato il collector per salvare i nuovi tipi di evento
+\item Dovrà essere modificato l'enricher per aggiungere il supporto ai nuovi eventi
+\item L'enricher dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento
+\end{itemize}
+
+\textbf{Desiderabili:}
+\begin{itemize}
+\item Il meccanismo contenente la logica di automazione degli eventi dovrà essere aperto ad estensioni per futuri eventi
+\end{itemize}
+
+\subsubsection{Fase 2}
+\textbf{Obbligatori:}
+\begin{itemize}
+\item Creare un servizio che interroghi Elasticsearch di monitoring, ricavi i dati degli accessi alle raccomandazioni e li salvi in un database
+\item Questo servizio deve salvare gli accessi con granularità oraria
+\item Questo servizio deve salvare gli accessi con granularità giornaliera
+\item Questo servizio deve salvare gli accessi con granularità mensile
+\item Sviluppare dei web services interrogabili dall'esterno che permettano di interrogare il database
+\item Questi web services devono prevedere politiche di accesso e un sistema di permessi uguali agli altri web services THRON
+\end{itemize}
+\textbf{Desiderabili:}
+\begin{itemize}
+\item Sviluppare un servizio che ripulisca i dati, con granularità oraria e giornaliera, più vecchi di due anni
+\end{itemize}
+
+\subsubsection{Fase 3}
+\textbf{Obbligatori:}
+\begin{itemize}
+\item Realizzare un grafico che indichi il numero di raccomandazioni fatte da un applicazione raccomandativa master (grafico quantitativo)
+\item Questo grafico deve permettere diverse granularità, in particolare oraria, giornaliera e mensile
+\item Questo grafico deve poter dare la possibilità di scegliere una data di inizio e di file per filtrare i dati
+\item Questo grafico deve poter mostrare, con possibilità di filtraggio, il numero di raccomandazioni delle singole applicazioni raccomandative slave
+\item Per ogni applicazione slave devono essere realizzati altri grafici per analizzare la bontà delle raccomandazioni (grafici qualitativi)
+\item Un grafico che mostri i cinquanta contenuti raccomandati visti più volte (ovvero con più impression) con la relativa quantità di click sul contenuto 
+\item Un grafico che mostri gli argomenti relativi ai contenuti più visti
+\item Un grafico che mostri il profilo dei contatti associato ai contenuti più visti
+\item Al click su un contenuto del primo grafico apra un popup che contenga 
+	\begin{itemize}
+	\item Una descrizione del contenuto
+	\item Il numero di impression 
+	\item Il numero di click
+	\item I tag del contenuto
+	\item Le tipologie degli utenti che hanno interagito col contenuto
+	\item Gli argomenti più trattati da queste tipologie di utenti
+	\end{itemize} 
+\item Dare la possibilità di filtrare per periodo qualunque
+\item Dare la possibilità di cercare specifici contenuti (nel caso non siano tra i primi cinquanta)
+\item Dare la possibilità di ordinare per più visti o più cliccati
+\end{itemize}
+\textbf{Opzionali:}
+\begin{itemize}
+\item Sviluppare una sezione in cui vengono dati consigli sulle raccomandazioni, ad esempio consigliare quali contenuti si consiglia di togliere dalle possibili raccomandazioni
+\item Sviluppare un meccanismo per la personalizzazione dei widget di raccomandazione
 \end{itemize}
 
 
-
 \subsection{Tecnologie utilizzate}
-
-% html e css?
 
 \subsubsection{Javascript}
 Javascript è un linguaggio di scripting orientato agli oggetti e agli eventi. Principalmente è utilizzato per la programmazione lato Client negli ambienti Web per aggiungere funzionalità, effetti dinamici o interattività alle pagine o applicazioni web.\\
 Da qualche tempo è però utilizzato in molti altri ambiti come la programmazione di applicazioni mobile tramite frameworks come ionic o appcelerator.\\
 Essendo Thron una piattaforma web Javascript è un linguaggio pressoché obbligatorio da imparare per lavorare in azienda.\\
-Nel mio stage l'ho utilizzato largamente per apportare le modifiche alla libreria dei tracciamenti visto che quest'ultima è interamente una libreria realizzata in javascript. In più l'ho utilizzato anche per aggiungere il tracciamento automatico nei widget di raccomandazione, essendo anche quest'ultimi realizzati in javascript.\\
-Per comodità e necessità ho utilizzato diverse librerie come \textbf{Lodash}, \textbf{CommonJS}, \textbf{JQuery} TODO aggiungere lib.\\
-TODO fatto? Inoltre ho utilizzato javascript anche per l'esposizione dei dati, ovvero per la creazione della console in cui sono esposti dei grafici come spiegato nei capitoli a seguire. Per questi l'azienda mi ha dato piena facoltà di scegliere e decidere cosa usare così ho studiato e provato le tre librerie che mi sembravano più adatte: \textbf{FusionCharts}, \textbf{KendoUI} e \textbf{d3js}.\\ \\
+Nel mio stage l'ho utilizzato largamente per apportare le modifiche alla libreria dei tracciamenti visto che quest'ultima è interamente una libreria realizzata in javascript.\\ %In più l'ho utilizzato anche per aggiungere il tracciamento automatico nei widget di raccomandazione, essendo anche quest'ultimi realizzati in javascript.\\
+Ho utilizzato diverse librerie come \textbf{Lodash}, \textbf{CommonJS}, \textbf{snowplow}, 	\textbf{jQuery}, \textbf{Bootstrap} e \textbf{grunt}.\\
+Inoltre ho utilizzato javascript anche per l'esposizione dei dati, ovvero per la creazione della console in cui sono esposti dei grafici come spiegato nei capitoli a seguire. Per questi l'azienda mi ha dato piena facoltà di scegliere e decidere cosa usare così ho studiato e provato le tre librerie che mi sembravano più adatte: \textbf{FusionCharts}, \textbf{KendoUI} e \textbf{d3js}.\\ \\
 FusionCharts è una libreria a pagamento nata nel 2003 e offre una vasta gamma di diagrammi, mappe, widgets e dashboards già fatti con cui arricchire i propri siti o applicazioni web. Dopo averla provata è risultata essere molto facile da imparare e immediata all'uso, quasi non necessita di conoscenze di programmazione. Molto belli e veloci i risultati che si possono ottenere tuttavia meno personalizzabili delle altre librerie provate proprio per la sua grande semplicità. Un altro punto a favore è la retro compatibilità molto estesa e resa automatica dalla libreria.\\
 D3js, che sta per data driven documents, è un altra libreria nata nel 2011 per la visualizzazione dinamica e interattiva di dati organizzati, quindi offre funzionalità a basso livello per creare grafici. Si può arrivare a dei risultati sbalorditivi e davvero di forte impatto, tuttavia a me non servivano diagrammi particolarmente complessi e in più necessita di molto più lavoro per ottenere buoni risultati. In questo caso la retro compatibilità non è sempre garantita per le versioni dei browser non recenti.\\
 KendoUI è un framework che offre una grandissima quantità di funzionalità built-in ma io mi sono concentrato nelle API per creare grafici. Anche in questo caso molto semplice da usare, risultati immediati e molto belli, in più offre più personalizzazione e una buona retro compatibilità.\\
 La scelta è ricaduta su FusionCharts poichè molti grafici già realizzati da THRON sono creati usando questa libreria, quindi risultava essere tutto più omogeneo utilizzando la stessa, inoltre essendo un pò stretti con i tempi l'uso di FusionCharts ho pensato potesse aiutare a farmi rientrare nei tempi.\\
 
+\subsubsection{HTML e CSS}
+Naturalmente per la creazione dei grafici e l'integrazione in \gloss{bacheca} ho utilizzato anche questi linguaggi.\\Le ho utilizzate anche per creare delle pagine di demo e di test per il \gloss{parser} creato per effettuare i tracciamenti in automatico.
+
+% vari TODO
 % dire cosa c'era nella track lib
 % dire cosa si è aggiunto
 % dire come si è pensato di presentare i dati come grafici e descriverli
 
-% dire della box di consigli per la raccomandazione?
+% TODO dire della box di consigli per la raccomandazione che non c'era tempo e verrà sviluppata in futuro
 
 \section{Progettazione e sviluppo}
 
