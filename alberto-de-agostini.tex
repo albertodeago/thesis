@@ -438,7 +438,7 @@ Tutti i seguenti obiettivi devono essere implementati all'interno di una dashboa
 %todo ovvero mettere javascript ma non le singole librerie, però mettere snowplow ad esempio
 %todo spiegare snowplow, vantaggi, svantaggi, workflow, schemes 
 %todo scala si, spark si, akka si
-%todo poi amazon, mongodb ecc..
+%todo poi amazon, mongodb ecc.. amazonSNS
 
 \section{Attività svolte}
 
@@ -475,9 +475,9 @@ Si è deciso quindi che questo fosse uno dei valori, per ogni contenuto, da pres
 Queste considerazioni poi possono essere estese non solo a contenuti caricati dal widget di raccomandazione ma bensì per qualunque altro ambito in cui un contenuto è condiviso e che si possa raccogliere dati di intelligence.
 Tutte queste considerazioni valgono non solo per contenuti caricati dai widgets di raccomandazione ma per qualunque contenuto THRON messo in pagina. Questo è stato motivo di ulteriore stimolo poiché erano funzionalità aggiunte per ora sullo specifico caso, ma in futuro estese ad altri progetti dell'azienda.
 
-\subsubsection{Progettazione e sviluppo fase 1}
+\subsubsection{Progettazione e sviluppo prima fase}
 
-\paragraph{Raccolta degli eventi - libreria dei tracciamenti}
+\paragraph{Raccolta degli eventi - libreria dei tracciamenti}\mbox{} \\
 Per raccogliere le informazioni necessarie THRON usa una libreria javascript che espone dei metodi per tracciare eventi. Questa libreria deve essere inclusa nelle pagine web o applicazioni e aggiunta in pagina la logica per tracciare queste informazioni. Un esempio banale: se si volesse acquisire l'informazione di quante volte viene aperta la scheda di un contenuto in un sito di e-commerce basterebbe lanciare un evento load al caricamento della pagina relativa dell'oggetto da vendere sul contenuto di tipo immagine relativo all'oggetto.\\
 La libreria dei tracciamenti THRON supportava diversi eventi da loro già tracciati, tuttavia non disponeva di metodi per tracciare impressions e clicks perciò era necessario aggiungere queste funzionalità.\\
 Per fare questo ho dovuto studiare come era implementata la libreria e familiarizzare con diverse tecnologie mai utilizzate da me prima tra cui:
@@ -523,10 +523,66 @@ Ho scelto di non andare oltre al secondo livello di parentela per due motivi:
 \end{itemize} 
 Ho provato il modulo sulle mie pagine di test contenenti più di cinquecento immagini con \gloss{DIV} con tutti gli scroll possibili e il parser sembrava andare molto bene e non ho notato nessun tipo di rallentamenti.\\
 Il tutor ha approvato il lavoro fatto e il parser è stato anche messo in alcune pagine del sito di THRON per testarlo in un caso d'uso vero dandomi molta soddisfazione.\\
-Per aggiungere la raccolta automatica dei widget di raccomandazione mi è bastato aggiungere nel codice del widget stesso le istruzioni per istanziare un parser e per far partire il parsing della sezione HTML in cui il widget è contenuto, questo infatti è associato ad un id che il widget conosce.
+Per aggiungere la raccolta automatica dei widget di raccomandazione mi è bastato aggiungere nel codice del widget stesso le istruzioni per istanziare un parser e per far partire il parsing della sezione HTML in cui il widget è contenuto, questo infatti è associato ad un id che il widget conosce.\\
+L'analisi e la progettazione di queste attività sono state più lunghe del previsto, si è deciso quindi di cercare di risparmiare tempo nelle prossime attività qual'ora ci fosse l'opportunità, altrimenti di tralasciare qualcuno degli obiettivi non obbligatori come lo strumento di personalizzazione dei widget.
 
-\paragraph{Elaborazione dei dati - Spark}
-%TODO scrivere parte spark
+\paragraph{Elaborazione dei dati raccolti - Spark}\mbox{} \\
+Come descritto in precendeza, in TODO LINK, il workflow di Snowplow prevede che i dati vengano raccolti in un posto chiamato \textit{\gloss{collector}}, qui si troveranno tutti i dati dei tracciamenti grezzi, così come sono inviati dai client. Per renderli presentabili all'utente finale hanno bisogno di alcune elaborazioni che sono fatte da degli \textit{\gloss{enricher}}.\\ %TODO è spiegato cos'è un enricher?
+THRON ha sviluppato diversi \textit{\gloss{enricher}} per diversi bisogni, quattro in particolare:
+\begin{itemize}
+	\item Un \textit{\gloss{enricher}} comune che prende i dati dal \textit{\gloss{collector}} e va ad aggiungere tutte quelle informazioni che sono necessarie per tutti i dati, indipendentemente da dove essi debbano essere presentati. Questo infatti aggiunge informazioni relativi a chi ha scatenato gli eventi. Questo modulo infatti associa all'identificativo utente tracciato un identificativo utente THRON tramite il merge con un database server side. Questo processo fa si che si identifichi univocamente l'utente che ha effettuato una certa azione
+	\item Un \gloss{enricher} per il recommendation che legge i dati in uscita del primo \gloss{enricher} e li elabora secondo algoritmi scritti da THRON per produrre in output dei json che servono per la raccomandazione di contenuti
+	\item Un \gloss{enricher} per il behaviour che serve ad analizzare le tag dei contenuti più frequentemente accedute da parte degli utenti per associarle ad essi
+	\item Un \gloss{enricher} per i reports che legge i dati arricchiti con le informazioni dei contatti e va ad aggiungere una serie di informazioni atte proprio a generare dei dati appositi per la presentazione dei dati ai clienti 
+\end{itemize}
+Tutti questi moduli sono software basati su Apache Spark scritti in scala e leggono i dati da instanze di Elasticsearch e post elaborazione li salvano in altre istanze di Elasticsearch.\\
+Lavorando a stretto contatto col team di Intelligence ho apportato delle modifiche all'\gloss{enricher} comune, ho aggiunto infatti il supporto ai nuovi tipi di evento che altrimenti erano filtrati. Ho poi aggiunto anche il supporto a nuove informazioni come l'appId.\\
+Per il reccomendation e il behaviour ho apportato piccolissime modifiche solo per far si che questi software filtrino i nuovi eventi. Questo è infatti necessario al momento perché gli algoritmi di raccomandazione e per l'analisi del comportamento utenti si basano su algoritmi di machine learning delicati e per introdurre i nuovi eventi c'è bisogno di un analisi molto approfondita. Questo era quindi impossibile con i vincoli temporali dello stage e potrebbe essere un progetto di stage futuro.\\
+Nell'\gloss{enricher} dei reports, che è quello che produrrà i dati da interrogare per la creazione dei grafici qualitativi, abbiamo aggiunto il supporto ai nuovi eventi e alle nuove informazioni. Inoltre per rendere più ordinato l'output dei dati abbiamo scelto di scrivere i dati in output su diversi indici di Elasticsearch raggruppati per tipo di evento. Questo può infatti migliorare leggermente le performance delle query se si conosce in partenza il tipo di eventi da cercare.\\
+Ci sono stati dei problemi per l'aggiunta di nuove informazioni per la serializzazione di questi ma grazie all'aiuto del team sono riuscito a finire le attività con un piccolo anticipo rispetto ai tempi prefissati.\\
+I web services necessari a interrogare l'Elasticsearch contenente i dati dei reports erano già presenti, è stato necessario effettuare delle modifiche su quest'ultimi per fari si che rendessero disponibili anche i nuovi dati elaborati ma queste modifiche sono state effettuate dal resto del team guadagnando così del tempo.\\
+
+\subsection{Seconda Fase}
+
+\subsubsection{Analisi per la raccolta del numero di raccomandazioni}
+Ho partecipato a delle riunioni col team Core per capire come rendere disponibili ai clienti i dati relativi alla quantità di raccomandazioni fatte dalle loro applicazioni. Questo è molto importante poiché i clienti al momento dell'acquisto dello strumento di raccomandazioni possono scegliere diversi Business Model che prevedono una quantità di raccomandazioni oraria massima prefissata. Superata questa soglia lo strumento non raccomanda più secondo algoritmi intelligenti ma propone solo contenuti simili.\\
+THRON possiede un \gloss{Elasticsearch} in cui vengono immagazzinati tutti gli accessi alle loro API. Tuttavia questi dati vengono salvati per un massimo di sessanta giorni poiché la mole di dati è non indifferente (si parla di almeno quattro gigabyte di log di accessi al giorno contando solo gli accessi alle API, senza contare quindi le fruizioni delle loro \gloss{cdn}).\\
+I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari andasse ad interrogare l'Elasticsearch di monitoring, ricavasse tutte le informazioni riguardanti gli accessi alle raccomandazioni e le andasse a salvare in qualche altro database.\\
+I grafici potranno avere una granularità oraria, giornaliera o mensile, si è scelto che i dati debbano essere salvati raggruppati per queste granularità per avere un risultato immediato.\\
+L'Elasticsearch di cui si parla è in una rete privata dell'azienda perché contiene dati che non devono essere resi pubblici, analogamente il database in cui si andranno a salvare i dati sarà nella stessa rete interna è quindi necessario anche creare uno strato di web services che rendano disponibili i dati riguardanti la quantità di raccomandazioni all'esterno.\\
+Come ultima cosa abbiamo pensato anche di creare, nel caso di fosse tempo, un servizio che ripulisse i dati più vecchi di due anni con granularità maggiore di quella mensile. Questo perché è poco auspicabile che un utente voglia vedere le raccomandazioni relative ad un giorno preciso di più di due anni fa.\\
+Inoltre la quantità di dati da salvare non è molto grande ma si parla comunque di una riga su un database per ogni ora per ogni applicazione raccomandativa, facendo dei calcoli si ottengono \textbf{8760} entry orarie per applicazione. Non è un numero molto grande ma bisogna pensare che le applicazioni raccomandative potrebbero aumentare di molto andando a aumentare l'ordine di grandezza dei dati da salvare.\\
+
+\subsubsection{Progettazione e sviluppo seconda fase}
+Per prima cosa mi è stato chiesto di pensare alle firme di tutti i servizi da creare. THRON mantiene tutta l'architettura software in un progetto di \textit{Enterprise Architect} tramite diagrammi delle classi e altro ancora.\\
+Hanno sviluppato un plugin che a partire dai diagrammi crea tutte le interfacce scala automaticamente.\\
+Mi hanno dato l'accesso a diverse loro \gloss{repositories} per farmi familiarizzare con il loro lato server, questo mi ha aiutato molto per la stesura delle firme dei vari metodi, anche perché la serie di web services per l'interrogazione dei reports già esistente era comunque simile a ciò che dovevo fare io. Sfruttando anche l'ereditarietà e i mixin Scala ho potuto riutilizzare parte del loro codice anche per le firme.\\
+Create e concordate le firme il team Core le ha aggiunte alla loro infrastruttura e ha generato le interfacce. Ho dovuto quindi creare le implementazioni di quest'ultime e per la parte di web services ho seguito molto quelli già esistenti. Questo mi ha facilitato molto il lavoro, ho potuto riutilizzare molti componenti di utilità già scritti da THRON come i servizi per l'autenticazione e dei meccanismi per l'accesso al database.\\
+Si è scelto di usare un \gloss{MongoDB} per il salvataggio dei dati per due motivi:
+\begin{itemize}
+	\item Il team Core faceva già un grande uso di questo database, c'erano già quindi classi di utilità per l'utilizzo di quest'ultimo
+	\item I dati da salvare non erano di tipo relazionale quindi era più idoneo usare un database NoSQL
+\end{itemize}
+Ho implementato, sempre anche grazie all'aiuto dell'azienda, i servizi per l'estrazione dei dati da Elasticsearch e il salvataggio in \gloss{MongoDB}.\\
+Per fare in modo che il servizio fosse eseguito ogni ora il team Core mi ha fornito l'accesso allo strumento di notifiche amazon, Amazon SNS. Hanno implementato diverse code di sottoscrizione con intervalli orari diversi per ogni necessità. Sottoscrivendo un servizio ad una di queste code Amazon SNS provvede automaticamente a risvegliare, tramite una \gloss{notifica push}, i servizi sottoscritti.\\
+Ho dovuto quindi tramite configurazione sottoscrivere questo servizio alla coda oraria per far si che fosse schedulato in automatico.\\
+Il scritto il servizio in modo che:
+\begin{itemize}
+	\item Per prima cosa legge dal database quando è stata l'ultima elaborazione dei dati
+	\item Interroga Elasticsearch chiedendo i dati relativi alle raccomandazioni dall'ultima elaborazione 
+	\item Crea un documento, nella collezione contenente i dati orari, con al suo interno il numero di raccomandazioni fatte per ogni applicazione raccomandativa
+	\item Controlla se è passato più di un giorno dall'ultima elaborazione dei dati giornaliera
+	\item Se si raccoglie, al suo interno, i dati relativi all'ultimo giorno e salva in una collezione adibita a contenere i dati giornalieri un documento con quest'ultimi
+	\item Effettua lo stesso controllo e la stessa logica per i dati mensili
+\end{itemize}
+In questo modo nel database sono presenti diverse collezioni contenenti i dati con le granularità richieste, nè il client nè il server non deve così effettuare nessun calcolo quando i dati gli sono restituiti.\\
+Ho pensato di organizzare i dati in questo modo anche per facilitare la creazione del servizio di pulizia dei dati vecchi, se fossero tutti i dati in un unica collezione avrebbe dovuto ad ogni esecuzione filtrare quelli con granularità diverse da quella da cercare rendendolo più lento.\\
+Ho poi implementato i web services necessari, è stato possibile riutilizzare tantissimo del codice già presente facilitandomi il compito, ho infatti utilizzato codice ed esteso alcuni dei web services relativi alla fruizione dei dati dei reports finendo così le attività in anticipo rispetto al previsto.\\
+Essendo in anticipo ho scritto il servizio per l'eliminazione dei dati più vecchi di due anni dal database, anche questo non ha creato problemi perché avevamo effettuato la progettazione pensando che la creazione di questo servizio era necessaria prima o poi. Sottoscritto il servizio alla coda mensile di SNS ho implementato facilmente.\\
+
+
+
+%TODO parte ux
 
 
 
@@ -537,7 +593,7 @@ Per aggiungere la raccolta automatica dei widget di raccomandazione mi è bastat
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-
+\chapter{Old stuff}
 \subsubsection{Tracciamento eventi - libreria dei tracciamenti}
 Inoltre si è scelto di aggiungere alla libreria la logica per tracciare questi eventi in automatico, cioè senza aggiunte di codice lato client in pagina, per facilitare ulteriormente i tracciamenti non solo per il \gloss{widget} raccomandativo ma anche per qualunque altra pagina web che necessiti di tracciare eventi come click, load, impression o altri eventi che verranno aggiunti in futuro.\\
 Questo ha provocato una modifica al mio piano di lavoro immettendo qualche giorno di lavoro (stimati cinque) per studiare la libreria dei tracciamenti, le tecnologie utilizzate, progettare come apportare le modifiche e svilupparle prima dello sviluppo del resto del progetto.\\
