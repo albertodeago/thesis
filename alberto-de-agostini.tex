@@ -544,7 +544,7 @@ I web services necessari a interrogare l'Elasticsearch contenente i dati dei rep
 
 \subsection{Seconda Fase}
 
-\subsubsection{Analisi per la raccolta del numero di raccomandazioni}
+\subsubsection{Analisi raccolta del numero di raccomandazioni}
 Ho partecipato a delle riunioni col team Core per capire come rendere disponibili ai clienti i dati relativi alla quantità di raccomandazioni fatte dalle loro applicazioni. Questo è molto importante poiché i clienti al momento dell'acquisto dello strumento di raccomandazioni possono scegliere diversi Business Model che prevedono una quantità di raccomandazioni oraria massima prefissata. Superata questa soglia lo strumento non raccomanda più secondo algoritmi intelligenti ma propone solo contenuti simili.\\
 THRON possiede un \gloss{Elasticsearch} in cui vengono immagazzinati tutti gli accessi alle loro API. Tuttavia questi dati vengono salvati per un massimo di sessanta giorni poiché la mole di dati è non indifferente (si parla di almeno quattro gigabyte di log di accessi al giorno contando solo gli accessi alle API, senza contare quindi le fruizioni delle loro \gloss{cdn}).\\
 I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari andasse ad interrogare l'Elasticsearch di monitoring, ricavasse tutte le informazioni riguardanti gli accessi alle raccomandazioni e le andasse a salvare in qualche altro database.\\
@@ -578,11 +578,150 @@ Il scritto il servizio in modo che:
 In questo modo nel database sono presenti diverse collezioni contenenti i dati con le granularità richieste, nè il client nè il server non deve così effettuare nessun calcolo quando i dati gli sono restituiti.\\
 Ho pensato di organizzare i dati in questo modo anche per facilitare la creazione del servizio di pulizia dei dati vecchi, se fossero tutti i dati in un unica collezione avrebbe dovuto ad ogni esecuzione filtrare quelli con granularità diverse da quella da cercare rendendolo più lento.\\
 Ho poi implementato i web services necessari, è stato possibile riutilizzare tantissimo del codice già presente facilitandomi il compito, ho infatti utilizzato codice ed esteso alcuni dei web services relativi alla fruizione dei dati dei reports finendo così le attività in anticipo rispetto al previsto.\\
-Essendo in anticipo ho scritto il servizio per l'eliminazione dei dati più vecchi di due anni dal database, anche questo non ha creato problemi perché avevamo effettuato la progettazione pensando che la creazione di questo servizio era necessaria prima o poi. Sottoscritto il servizio alla coda mensile di SNS ho implementato facilmente.\\
+Essendo in anticipo ho scritto il servizio per l'eliminazione dei dati più vecchi di due anni dal database, anche questo non ha creato problemi perché avevamo effettuato la progettazione pensando che la creazione di questo servizio era necessaria prima o poi. Sottoscritto il servizio alla coda mensile di SNS ho implementato facilmente il resto.\\
+Assieme al team Core abbiamo anche implementato un servizio di monitoring che analizzi, ad ogni esecuzione, la qualità del processo eseguito. In particolare nel caso il servizio fallisca lanciando un eccezione il servizio di monitoring avverte il team tramite una notifica su uno schermo che hanno in ufficio che è avvenuto un errore. Manda una notifica anche nel caso il servizio di metta più di una certa durata che abbiamo fissato a venti minuti.\\
+Grazie a questa console il team Core tiene monitorato anche tutta una serie di altri loro servizio per capire, prima di ricevere eventuali segnalazioni dei clienti, se qualcosa non sta funzionando o se ci sono rallentamenti che necessitano una analisi da parte loro.\\
+
+\section{Terza fase}
+
+\subsection{Analisi esposizione dati}
+Lo scopo di questa fase era trovare dei grafici adatti ad esporre in una dashboard i dati raccolti in maniera chiara e concisa.\\
+Sono state fatte delle riunioni con membri del team di Design e di UX sia per capire quali grafici inserire nella dashboard, l'usabilità che essa deve fruire e come integrarla in \gloss{bacheca}.\\
+Mi sono state imposte delle tecnologie per esempio l'integrazione in bacheca mentre mi è stata data l'opportunità di scegliere cosa utilizzare per la creazione dei grafici.\\
+Abbiamo pensato di creare un grafico per la rappresentazione della quantità di raccomandazioni.\\
+In particolare il grafico presenterà in asse X il tempo, in base alla granularità scelta. Ad esempio potrà essere la lista delle ore, dei giorni o dei mesi.\\
+Nell'asse Y invece sarà presente il numero di raccomandazioni per ogni applicazione slave.\\
+%TODO creare img prototipo.
+Abbiamo scelto poi di creare più grafici per fornire informazioni sulle singole applicazioni raccomandative.\\
+Un grafico, principale, che fornisca i dati sui cinquanta contenuti più raccomandati. Questo grafico avrà nell'asse Y i contenuti, possibilmente con una Thumbnail per facilitarne il riconoscimento e nell'asse X la quantità di click e di impression.\\
+Due grafici a lato che mostrino le tag dei contenuti più raccomandati e le tag riguardanti i profili associati ai contenuti più raccomandati.\\
+Tutti questi grafici devono essere filtrabili per periodo di tempo, ordinati per impressions o per clicks e in più dev'essere possibile cercare singoli contenuti, questo serve nel caso si sia interessati ad un particolare contenuto che magari non è tra i primi cinquanta in ordine di raccomandazioni.\\
+%TODO aggiungere imgs prototipi grafici
+Al click sulla thumbnail di un contenuto far apparire una finestra modale in cui si possano vedere più dettagli del contenuto scelto, tra cui una descrizione, il tipo di utenti a cui è stato raccomandato e che ci hanno cliccato e gli argomenti trattati dagli utenti che hanno cliccato.
+%TODO img prototipo post click
+
+\subsection{Progettazione e sviluppo terza fase}
+Per prima cosa ho scelto cosa utilizzare per la creazione dei grafici. I grafici devono essere presentati nella dashboard che consiste in una pagina web che andrà a finire all'interno di \gloss{bacheca}. Il linguaggio da utilizzare era perciò Javascript, ho studiato e provato tre librerie che mi sembravano le più adatte a creare questi grafici:
+\begin{itemize}
+	\item D3js
+	\item FusionCharts
+	\item KendoUI
+\end{itemize}
+\textbf{D3js:} (Data Driven Documents) è una libreria gratuita nata nel 2011 per la visualizzazione dinamica e interattiva di dati organizzati, offre funzionalità a basso livello per creare grafici attraverso oggetti SVG.\\
+Si possono avere dei risultati sbalorditivi e di forte impatto, tuttavia io non dovevo fare grafici particolarmente complessi, in più necessità di molto più codice e tempo. In più la retro compatibilità non è garantita fino a versioni era obbligatorio mantenere quindi l'ho esclusa come possibilità.\\
+\textbf{KendoUI:} è un framework a pagamento che offre una grandissima quantità di funzionalità built-in da io mi sono concentrato nella libreria che offre API per creare grafici. Questa libreria è molto semplice da usare, si raggiungono risultati quasi immediatamente e molto belli. Offre un buon livello di personalizzazione e una sufficiente retro compatibilità.\\
+Tuttavia ho scelto di utilizzare la terza libreria in particolare per questioni di feeling utente. Infatti i grafici dei \gloss{reports} THRON utilizzano tutti la libreria FusionCharts.\\
+\textbf{FusionCharts:} è una libreria a pagamento  nata nel 2003 e offre una vasta gamma di diagrammi, mappe, widgets e dashboards già fatti con cui arricchire i propri siti o applicazioni web. Dopo averla provata è risultata essere la più facile, quasi non necessità conoscenze di programmazione per avere risultati semplici. Molto belli i grafici prodotti tuttavia meno personalizzabili rispetto a quelli creati con Kendo ad esempio.\\
+La scelta è ricaduta su FusionCharts per mantenere un look identico agli altri grafici di reportistica già fatti da THRON.\\
+La creazione dei grafici è stata molto semplice, l'uso di FusionCharts affiancato a dei web services che rispondono con una struttura dati da me scelta, simile a quella che FusionCharts usa mi ha facilitato il compito. Un altra cosa è stata l'integrazione di questa dashboard in \gloss{bacheca}.\\
+Essendo il mio codice che andava ad integrarsi all'interno del loro software ho dovuto adeguarmi a regole, strumenti e tecnologie utilizzati dal loro team.\\
+Ho utilizzato \textit{Knockout.js} che è un framework per l'implementazione di pattern \gloss{MVVM} con templates.\\
+\textit{Gulp}, simile a Grunt, per automatizzare la compilazione ed altre azioni comuni.\\
+Un altro strumento utile che ho dovuto imparare è stato \textit{tooltipster}. \`{E} un plugin per jQuery che facilita la creazione di \gloss{tooltip} e la gestione di essi, ad esempio per far si che un tooltip si chiuda quando se ne apre un altro.\\
+La parte che mi ha creato più difficoltà è stata la stilizzazione della dashboard, in \gloss{bacheca} utilizzano il framework \textit{SASS} per mantenere il codice CSS più pulito. Questo aggiunge funzionalità come variabili ed ereditarietà ai css e il team utilizza un pattern \gloss{MVC} in tutti i loro CSS. \`{E} stato difficile entrare in sintonia con le loro convenzioni poiché non avevo mai avuto modo di rapportarmi con progetti con CSS così complessi. Anche a fine stage non mi reputo ancora in grado di destreggiarmi facilmente in quel progetto ma grazie anche al supporto che mi è stato dato sono riuscito a mantenere una struttura analoga alla loro.\\
+Credevo di avere più problemi per il grande supporto a browser richiesto ma grazie all'uso di molti framework e librerie non ho avuto problemi di questo tipo.\\
+%TODO aggiungere immagini risultati e commentarle un pò.
+Alla fine di queste attività era finito l'intero periodi di stage per cui non è stato possibile realizzare il meccanismo per la personalizzazione dei widgets di raccomandazione.
+
+\section{Obiettivi raggiunti}
+
+%TODO trasformare il sotto in una tabella come quella di L.T. così da esporre gli obiettivi in maniera chiara.
+\begin{enumerate}
+	\item Visualizzazione dello storico delle prestazioni del PCR negli ultimi 30 giorni, con intervallo selezionabile
+\end{enumerate}
+\textbf{Obbligatori:}
+\begin{itemize}
+\item Dovrà essere aggiunta la funzionalità di tracciare \gloss{impression} nella libreria dei tracciamenti THRON
+\item Dovrà essere aggiunta la funzionalità di tracciare \gloss{click} nella libreria dei tracciamenti THRON
+\item Dovrà essere aggiunto un meccanismo per tracciare eventi come \gloss{click}, \gloss{load} e gloss{impression} in automatico nella libreria dei tracciamenti THRON.
+\item Le modifiche da apportare alla libreria dei tracciamenti dovranno mantenere una retro compatibilità totale
+\item Tutte le modifiche devono essere supportate nelle seguenti versioni dei browsers:
+	\begin{itemize}
+	\item Internet Explorer 9 e successivi
+	\item Firefox 3.5 e successivi
+	\item Chrome tutte le versioni
+	\item Safari OSX 5 e successivi
+	\item Android 4.1 e successivi: Chrome tutte le versioni
+	\item IOS 4.x e successivi: Safari 4 e successivi, Chrome tutte le versioni
+	\end{itemize}
+\item Dovrà essere modificato l'\gloss{enricher} per aggiungere il supporto ai nuovi eventi
+\item L'\gloss{enricher} dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento
+\item Aggiungere al modulo dei \gloss{Reports} il supporto ai nuovi eventi
+\item Far si che gli altri \gloss{moduli di Intelligence} ignorino questi nuovi eventi per il momento
+\end{itemize}
+
+\textbf{Desiderabili:}
+\begin{itemize}
+\item Il meccanismo contenente la logica di automazione degli eventi dovrà essere aperto ad estensioni per futuri eventi
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\begin{enumerate}
+	\item Diagramma che indica con granularità oraria il numero di richieste per la singola PCR
+	\item Lista o diagramma che indica lo sforamento del numero di richieste rispetto al modello di business attivato
+\end{enumerate}
+
+\textbf{Obbligatori:}
+\begin{itemize}
+	\item Creare un servizio che interroghi Elasticsearch di monitoring, ricavi i dati degli accessi alle raccomandazioni e li salvi in un database
+	\begin{itemize}
+		\item Questo servizio deve salvare gli accessi con granularità oraria
+		\item Questo servizio deve salvare gli accessi con granularità giornaliera
+		\item Questo servizio deve salvare gli accessi con granularità mensile
+	\end{itemize}
+	\item Sviluppare dei web services interrogabili dall'esterno che permettano di interrogare il database
+	\begin{itemize}
+		\item Questi web services devono prevedere politiche di accesso e un sistema di permessi uguali agli altri web services THRON
+	\end{itemize}
+\end{itemize}
+\textbf{Desiderabili:}
+\begin{itemize}
+	\item Sviluppare un servizio che ripulisca i dati, con granularità oraria e giornaliera, più vecchi di due anni
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+Gli obiettivi di questa fase mirano a sviluppare una dashboard con all'interno il necessario per la presentazione dei dati raccolti ed elaborati nelle fasi precedenti.\\ Sono quindi utili per soddisfare tutti gli obiettivi dello stage poiché tutti i grafici utilizzano i dati raccolti in precedenza.
+\textbf{Obbligatori:}
+Tutti i seguenti obiettivi devono essere implementati all'interno di una dashboard da integrare nell'applicazione \gloss{bacheca} di THRON.
+\begin{itemize}
+	\item Realizzare un grafico che indichi il numero di raccomandazioni fatte da un applicazione raccomandativa master (grafico quantitativo)
+	\begin{itemize}
+		\item Questo grafico deve permettere la scelta di diverse granularità, in particolare oraria, giornaliera e mensile
+		\item Questo grafico deve permettere la scelta di una data di inizio e di fine per filtrare i dati
+		\item Questo grafico deve poter mostrare, con possibilità di filtraggio, il numero di raccomandazioni delle singole applicazioni raccomandative slave
+	\end{itemize}
+	
+	\item Per ogni applicazione slave devono essere realizzati altri grafici per analizzare la bontà delle raccomandazioni (grafici qualitativi)
+	\begin{itemize}
+		\item Un grafico che mostri i cinquanta contenuti raccomandati visti più volte (ovvero con più \gloss{impression}) con la relativa quantità di click sul contenuto 
+		\item Un grafico che mostri gli argomenti relativi ai contenuti più visti
+		\item Un grafico che mostri il profilo dei contatti associato ai contenuti più visti
+		
+		\item Al click su un contenuto di questo grafico si apra un popup che contenga 
+		\begin{itemize}
+			\item Una descrizione del contenuto
+			\item Il numero di \gloss{impression}
+			\item Il numero di \gloss{click} TODO impression e click o clickfrureit?
+			\item I tag del contenuto
+			\item Le tipologie degli utenti che hanno interagito col contenuto
+			\item Gli argomenti più trattati da queste tipologie di utenti
+		\end{itemize} 
+	\end{itemize}
+
+	\item Dare la possibilità di filtrare per periodo qualunque
+	\item Dare la possibilità di cercare specifici contenuti
+	\item Dare la possibilità di ordinare per più visti o più cliccati
+\end{itemize}
+\textbf{Opzionali:}
+\begin{itemize}
+	\item Sviluppare una sezione in cui vengono dati consigli sulle raccomandazioni, ad esempio consigliare quali contenuti si consiglia di togliere dalle possibili raccomandazioni
+	\item Sviluppare un meccanismo per la personalizzazione dei widget di raccomandazione
+\end{itemize}
 
 
 
-%TODO parte ux
+
 
 
 
@@ -626,7 +765,7 @@ Essendo la quantità di dati elevata di è deciso, qual'ora il tempo lo permette
 \subsection{Analisi fase 3}
 Infine sono state fatte le analisi per discutere come presentare questi dati ai clienti.\\
 col team di design si sono scelti i tipi dei grafici da presentare per ottenere una maggior usabilità possibile e per rendere i dati di facile comprensione, cosa non banale avendo moltissime informazioni da esporre.\\
-Col team UX si è discusso invece di come integrare questi grafici nel loro software in cui sono già presenti molti grafici per la presentazione di informazioni di Intelligence. TODO aggiungere img grafici intelligente\\
+Col team UX si è discusso invece di come integrare questi grafici nel loro software in cui sono già presenti molti grafici per la presentazione di informazioni di Intelligence. TODO aggiungere img grafici intelligence\\
 
 
 
