@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{lastpage}
+%\usepackage[table]{xcolor}
 
 \titleformat{\chapter}[display]
 {\normalfont\huge\bfseries}{}{0pt}{\Huge}
@@ -42,7 +43,7 @@
 \addto\captionsenglish{\renewcommand*\abstractname{Sommario}} % change Abstract title
 %------------------------------ active url
 \usepackage{url}
-\renewcommand{\UrlFont}{\color{black}\small\ttfamily}
+\renewcommand{\UrlFont}{\color{blue}\small\ttfamily}
 \usepackage[colorlinks=true, linkcolor=black, citecolor=black, urlcolor=black]{hyperref} % active ref
 %------------------------------ macros
 \newcommand{\sectionname}{Section} % define Section ref
@@ -120,20 +121,20 @@ A ...
 \null
 
 
-\begingroup %------------------------------ CONTENTS
-  \makeatletter
-  \let\ps@plain\ps@empty
-  \makeatother
-  \tableofcontents
-  \clearpage
-\endgroup
+%\begingroup %------------------------------ CONTENTS
+%  \makeatletter
+%  \let\ps@plain\ps@empty
+%  \makeatother
+%  \tableofcontents
+%  \clearpage
+%\endgroup
 
 
-\begin{abstract} %------------------------------ ABSTRACT
-\markboth{}{} % remove header
-\thispagestyle{empty}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis tincidunt ligula. Duis ante neque, convallis vel vulputate vel, dignissim vel enim. Proin et iaculis libero. Aliquam erat volutpat. Cras ac purus non ante ultricies scelerisque. Donec lobortis lorem imperdiet leo consequat nec iaculis velit adipiscing. Curabitur nec gravida neque. Nunc vel dui vitae ante dapibus sagittis ac non libero. Suspendisse gravida commodo arcu bibendum luctus. Nam placerat pharetra massa, aliquam rutrum arcu fermentum nec. In non ultrices ante. Pellentesque pretium, felis ac mattis condimentum, dui massa ultricies nisl, hendrerit malesuada magna risus eget dolor. Pellentesque lobortis eleifend nibh, sed gravida sem fringilla eget. Proin pretium, arcu in ornare pellentesque, elit ante faucibus sem, at convallis eros ante ut velit. Donec ornare erat non diam tristique vitae congue nulla commodo. Proin fermentum fringilla mattis. Pellentesque ut dolor hendrerit tellus tincidunt egestas at sit amet velit.
-\end{abstract}
+%\begin{abstract} %------------------------------ ABSTRACT
+%\markboth{}{} % remove header
+%\thispagestyle{empty}
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis tincidunt ligula. Duis ante neque, convallis vel vulputate vel, dignissim vel enim. Proin et iaculis libero. Aliquam erat volutpat. Cras ac purus non ante ultricies scelerisque. Donec lobortis lorem imperdiet leo consequat nec iaculis velit adipiscing. Curabitur nec gravida neque. Nunc vel dui vitae ante dapibus sagittis ac non libero. Suspendisse gravida commodo arcu bibendum luctus. Nam placerat pharetra massa, aliquam rutrum arcu fermentum nec. In non ultrices ante. Pellentesque pretium, felis ac mattis condimentum, dui massa ultricies nisl, hendrerit malesuada magna risus eget dolor. Pellentesque lobortis eleifend nibh, sed gravida sem fringilla eget. Proin pretium, arcu in ornare pellentesque, elit ante faucibus sem, at convallis eros ante ut velit. Donec ornare erat non diam tristique vitae congue nulla commodo. Proin fermentum fringilla mattis. Pellentesque ut dolor hendrerit tellus tincidunt egestas at sit amet velit.
+%\end{abstract}
 
 
 \mainmatter
@@ -625,106 +626,128 @@ Alla fine di queste attività era finito l'intero periodi di stage per cui non �
 
 \section{Obiettivi raggiunti}
 
-%TODO trasformare il sotto in una tabella come quella di L.T. così da esporre gli obiettivi in maniera chiara.
-\begin{enumerate}
-	\item Visualizzazione dello storico delle prestazioni del PCR negli ultimi 30 giorni, con intervallo selezionabile
-\end{enumerate}
-\textbf{Obbligatori:}
-\begin{itemize}
-\item Dovrà essere aggiunta la funzionalità di tracciare \gloss{impression} nella libreria dei tracciamenti THRON
-\item Dovrà essere aggiunta la funzionalità di tracciare \gloss{click} nella libreria dei tracciamenti THRON
-\item Dovrà essere aggiunto un meccanismo per tracciare eventi come \gloss{click}, \gloss{load} e gloss{impression} in automatico nella libreria dei tracciamenti THRON.
-\item Le modifiche da apportare alla libreria dei tracciamenti dovranno mantenere una retro compatibilità totale
-\item Tutte le modifiche devono essere supportate nelle seguenti versioni dei browsers:
-	\begin{itemize}
-	\item Internet Explorer 9 e successivi
-	\item Firefox 3.5 e successivi
-	\item Chrome tutte le versioni
-	\item Safari OSX 5 e successivi
-	\item Android 4.1 e successivi: Chrome tutte le versioni
-	\item IOS 4.x e successivi: Safari 4 e successivi, Chrome tutte le versioni
-	\end{itemize}
-\item Dovrà essere modificato l'\gloss{enricher} per aggiungere il supporto ai nuovi eventi
-\item L'\gloss{enricher} dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento
-\item Aggiungere al modulo dei \gloss{Reports} il supporto ai nuovi eventi
-\item Far si che gli altri \gloss{moduli di Intelligence} ignorino questi nuovi eventi per il momento
-\end{itemize}
+\subsection{Prima fase - Obbligatori}
+\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ m{26em} | m{5em} }
+	\rowcolor{gray!50}
+	\textbf{OBIETTIVO} & \textbf{STATO}\\
+	Dovrà essere aggiunta la funzionalità di tracciare \gloss{impression} nella libreria dei tracciamenti THRON & Soddisfatto\\
+	Dovrà essere aggiunta la funzionalità di tracciare \gloss{click} nella libreria dei tracciamenti THRON & Soddisfatto\\
+	Dovrà essere aggiunto un meccanismo per tracciare eventi come \gloss{click}, \gloss{load} e gloss{impression} in automatico nella libreria dei tracciamenti THRON & Soddisfatto\\
+	Le modifiche da apportare alla libreria dei tracciamenti dovranno mantenere una retro compatibilità totale & Soddisfatto\\
+	Le modifiche devono essere supportato in Internet Explorer 9 e successivi & Soddisfatto\\
+	Le modifiche devono essere supportato in Firefox 3.5 e successivi & Soddisfatto\\
+	Le modifiche devono essere supportato in Chrome tutte le versioni & Soddisfatto\\
+	Le modifiche devono essere supportato in Safari OSX5 e successivi & Soddisfatto\\
+	Le modifiche devono essere supportato in Android 4.1 e successivi: Chrome tutte le versioni & Soddisfatto\\
+	Le modifiche devono essere supportato in IOS 4.x e successivi: Safari 4 e successivi, Chrome tutte le versioni & Soddisfatto\\
+	Dovrà essere modificato l'\gloss{enricher} per aggiungere il supporto ai nuovi eventi & Soddisfatto\\
+	Aggiungere al modulo dei \gloss{Reports} il supporto ai nuovi eventi & Soddisfatto\\
+	L'\gloss{enricher} dei \gloss{Reports} dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento & Soddisfatto\\
+	Far si che gli altri \gloss{moduli di Intelligence} ignorino questi nuovi eventi & Soddisfatto\\
+\end{tabular}
 
-\textbf{Desiderabili:}
-\begin{itemize}
-\item Il meccanismo contenente la logica di automazione degli eventi dovrà essere aperto ad estensioni per futuri eventi
-\end{itemize}
+\subsection{Prima fase - Desiderabili}
+\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ m{26em} | m{5em} }
+	\rowcolor{gray!50}
+	\textbf{OBIETTIVO} & \textbf{STATO}\\
+	Il meccanismo contenente la logica di automazione degli eventi dovrà essere aperto ad estensioni per futuri eventi & Soddisfatto\\
+\end{tabular}
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\begin{enumerate}
-	\item Diagramma che indica con granularità oraria il numero di richieste per la singola PCR
-	\item Lista o diagramma che indica lo sforamento del numero di richieste rispetto al modello di business attivato
-\end{enumerate}
+\subsection{Seconda fase - Obbligatori}
+\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ m{26em} | m{5em} }
+	\rowcolor{gray!50}
+	\textbf{OBIETTIVO} & \textbf{STATO}\\
+	Creare un servizio che interroghi Elasticsearch di monitoring, ricavi i dati degli accessi alle raccomandazioni con granularità oraria e li salvi in un database & Soddisfatto\\
+	Creare un servizio che interroghi Elasticsearch di monitoring, ricavi i dati degli accessi alle raccomandazioni con granularità giornaliera e li salvi in un database & Soddisfatto\\
+	Creare un servizio che interroghi Elasticsearch di monitoring, ricavi i dati degli accessi alle raccomandazioni con granularità mensile e li salvi in un database & Soddisfatto\\
+	Progettare e sviluppare dei web services interrogabili dall'esterno che permettano di interrogare il database & Soddisfatto\\
+	Utilizzare delle politiche di accesso e un sistema di permessi uguali agli altri web services THRON per questi nuovi & Soddisfatto\\
+\end{tabular}
 
-\textbf{Obbligatori:}
-\begin{itemize}
-	\item Creare un servizio che interroghi Elasticsearch di monitoring, ricavi i dati degli accessi alle raccomandazioni e li salvi in un database
-	\begin{itemize}
-		\item Questo servizio deve salvare gli accessi con granularità oraria
-		\item Questo servizio deve salvare gli accessi con granularità giornaliera
-		\item Questo servizio deve salvare gli accessi con granularità mensile
-	\end{itemize}
-	\item Sviluppare dei web services interrogabili dall'esterno che permettano di interrogare il database
-	\begin{itemize}
-		\item Questi web services devono prevedere politiche di accesso e un sistema di permessi uguali agli altri web services THRON
-	\end{itemize}
-\end{itemize}
-\textbf{Desiderabili:}
-\begin{itemize}
-	\item Sviluppare un servizio che ripulisca i dati, con granularità oraria e giornaliera, più vecchi di due anni
-\end{itemize}
+\subsection{Seconda fase - Desiderabili}
+\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ m{26em} | m{5em} }
+	\rowcolor{gray!50}
+	\textbf{OBIETTIVO} & \textbf{STATO}\\
+	Sviluppare un servizio che ripulisca i dati, con granularità oraria e giornaliera, più vecchi di due anni & Soddisfatto\\
+\end{tabular}
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Terza fase - Obbligatori}
+\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ m{26em} | m{5em} }
+	\rowcolor{gray!50}
+	\textbf{OBIETTIVO} & \textbf{STATO}\\
+	Realizzare un grafico che indichi il numero di raccomandazioni fatte da un applicazione raccomandativa master & Soddisfatto\\
+	Dare la possibilità di scegliere la granularità temporale per il grafico, in particolare granularità oraria, giornaliera e mensile & Soddisfatto\\
+	Dare la possibilità di filtrare i risultati del grafico scelta una data di inizio e di fine & Soddisfatto\\
+	Dare la possibilità di filtrare i risultati del grafico scelta una o più applicazioni raccomandative slave & Soddisfatto\\
+	Creare un grafico per ogni applicazione slave che mostri i cinquanta contenuti raccomandati visti più volte, mostrando anche la quantità di click ricevuti & Soddisfatto\\
+	Creare un grafico che mostri gli argomenti relativi ai contenuti più visti & Soddisfatto\\
+	Creare un grafico che mostri il profilo dei contatti associato ai contenuti più visti & Soddisfatto\\
+	Dare la possibilità di visualizzare una descrizione di un contenuto al click su di esso & Soddisfatto\\
+	Dare la possibilità di visualizzare i tag di un contenuto al click su di esso & Soddisfatto\\
+	Dare la possibilità di visualizzare le tipologie degli utenti che hanno interagito con un al click su di esso & Soddisfatto\\
+	Dare la possibilità di visualizzare gli argomenti più trattati da queste tipologie di utenti al click su di un contenuto & Soddisfatto\\
+	Dare la possibilità di filtrare per un periodo qualunque tutti i grafici relativi ad una applicazione slave & Soddisfatto\\
+	Dare la possibilità di cercare un contenuto specifico in tutti i grafici relativi ad una applicazione slave & Soddisfatto\\
+	Dare la possibilità di ordinare i contenuti per più visti o più cliccati sul grafico che mostra i cinquanta contenuti di una applicazione slave & Soddisfatto\\
+\end{tabular}
 
-Gli obiettivi di questa fase mirano a sviluppare una dashboard con all'interno il necessario per la presentazione dei dati raccolti ed elaborati nelle fasi precedenti.\\ Sono quindi utili per soddisfare tutti gli obiettivi dello stage poiché tutti i grafici utilizzano i dati raccolti in precedenza.
-\textbf{Obbligatori:}
-Tutti i seguenti obiettivi devono essere implementati all'interno di una dashboard da integrare nell'applicazione \gloss{bacheca} di THRON.
-\begin{itemize}
-	\item Realizzare un grafico che indichi il numero di raccomandazioni fatte da un applicazione raccomandativa master (grafico quantitativo)
-	\begin{itemize}
-		\item Questo grafico deve permettere la scelta di diverse granularità, in particolare oraria, giornaliera e mensile
-		\item Questo grafico deve permettere la scelta di una data di inizio e di fine per filtrare i dati
-		\item Questo grafico deve poter mostrare, con possibilità di filtraggio, il numero di raccomandazioni delle singole applicazioni raccomandative slave
-	\end{itemize}
-	
-	\item Per ogni applicazione slave devono essere realizzati altri grafici per analizzare la bontà delle raccomandazioni (grafici qualitativi)
-	\begin{itemize}
-		\item Un grafico che mostri i cinquanta contenuti raccomandati visti più volte (ovvero con più \gloss{impression}) con la relativa quantità di click sul contenuto 
-		\item Un grafico che mostri gli argomenti relativi ai contenuti più visti
-		\item Un grafico che mostri il profilo dei contatti associato ai contenuti più visti
-		
-		\item Al click su un contenuto di questo grafico si apra un popup che contenga 
-		\begin{itemize}
-			\item Una descrizione del contenuto
-			\item Il numero di \gloss{impression}
-			\item Il numero di \gloss{click} TODO impression e click o clickfrureit?
-			\item I tag del contenuto
-			\item Le tipologie degli utenti che hanno interagito col contenuto
-			\item Gli argomenti più trattati da queste tipologie di utenti
-		\end{itemize} 
-	\end{itemize}
+\subsection{Terza fase - Desiderabili}
+\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ m{26em} | m{5em} }
+	\rowcolor{gray!50}
+	\textbf{OBIETTIVO} & \textbf{STATO}\\
+	Sviluppare una sezione in cui vengono dati consigli sulle raccomandazioni, ad esempio consigliare quali contenuti si consiglia di togliere dalle possibili raccomandazioni & Non soddisfatto\\
+	Sviluppare un meccanismo per la personalizzazione dei widget di raccomandazione & Non soddisfatto\\
+\end{tabular}
 
-	\item Dare la possibilità di filtrare per periodo qualunque
-	\item Dare la possibilità di cercare specifici contenuti
-	\item Dare la possibilità di ordinare per più visti o più cliccati
-\end{itemize}
-\textbf{Opzionali:}
-\begin{itemize}
-	\item Sviluppare una sezione in cui vengono dati consigli sulle raccomandazioni, ad esempio consigliare quali contenuti si consiglia di togliere dalle possibili raccomandazioni
-	\item Sviluppare un meccanismo per la personalizzazione dei widget di raccomandazione
-\end{itemize}
+\chapter{Valutazione retrospettiva}
 
+\section{Obiettivi raggiunti}
 
+L'azienda possedeva chiari obiettivi che volevano fossero raggiunti, finito lo stage è stato possibile determinare il grado di completezza raggiunto col progetto.\\
+Gli obiettivi riguardanti la prima parte dello stage sono stati tutti raggiunti, obbligatori e non. Nonostante queste attività abbiano provocato dei ritardi rispetto al piano di lavoro, rendendo così impossibile finire gli ultimi obiettivi facoltativi, l'azienda è stata molto soddisfatta del lavoro fatto. In particolar modo del modulo aggiuntivo per il tracciamento automatico delle immagini.\\
+Questo infatti da l'inizio ad un progetto molto importante poiché l'azienda ha come obiettivo, non a lungo termine, di produrre una libreria in grado di tracciare automaticamente tutti gli eventi, relativi a contenuti THRON in pagina, senza alcuno sforzo necessario da parte del cliente.\\
+Per quanto riguarda la seconda fase, anche in questo caso l'azienda is è dimostrata soddisfatta degli obiettivi raggiunti. Apprezzato il fatto che si sia creato anche un servizio per ripulire i dati, questo infatti era particolarmente richiesto dal team Core essendo il database in cui si scrivono i dati sotto la loro responsabilità.\\ %todo contenti anche del monitoring
+La terza fase, a causa dei ritardi provocati dalle attività dei tracciamenti, è stata la meno soddisfacente. Gli obiettivi obbligatori sono stati tutti raggiunti con soddisfazione, tuttavia gli opzionali non sono stati sviluppati.\\
+Durante le attività di analisi relative a quest'ultima parte si è però pensato ed aggiunto uno degli obiettivi facoltativi ovvero sviluppare una sezione in cui vengono dati dei consigli sulle raccomandazioni. Questo obiettivo può in futuro, in seguito a ulteriori analisi, diventare un progetto di stage a se stante molto interessante. Infatti si è pensato che sarà possibile creare una box, al di sotto della dashboard, che dia consigli intelligenti sulle raccomandazioni, andando a suggerire quali contenuti è meglio togliere e quali invece si potrebbero aggiungere presentando ulteriori statistiche più avanzate.\\
+Per quanto riguarda gli obiettivi personali, descritti in todolink, mi ritengo pienamente soddisfatto dell'esperienza fatta. L'uso di diverse tecnologie che mi ha spinto a scegliere questo progetto è stato più che soddisfacente, inoltre ho affrontato problemi che non avrei mai pensato di affrontare nè di risolvere, grazie anche all'aiuto dell'azienda.\\
+Il progetto comunque è stato considerato molto positivo e la maggior parte delle modifiche era in produzione durante la stesura della mia tesi, dandomi così un ulteriore motivo di orgoglio.\\
 
+\section{Competenze acquisite}
+Vorrei iniziare dicendo che senza l'esperienza acquisita grazie al corso universitario non sarei mai riuscito ad affrontare un progetto di questa portata. Le competenze tecniche fornitemi dall'università sono state più sufficienti per affrontare i problemi di programmazione che mi sono stati sottoposti.\\
+Inoltre grazie ai corsi orientati al lavoro di gruppo, come Ingegneria del Software, mi è stato facilitato il compito di lavorare a stretto contatto con persone diverse e ad adeguarmi a norme diverse per ogni team.\\
+Riguardo alle competenze tecniche acquisite, ho sviluppato di molto la conoscenza su linguaggi di programmazione che già conoscevo come Scala e Javascript, utilizzando moltissime librerie e andando a lavorare in progetti non del calibro di quelli universitari.\\
+Le attività che mi hanno colpito e formato maggiormente sono state quelle relative la prima fase. Non avevo nessuna competenza riguardante l'attività di profilazione e di tracciamento degli utenti e devo dire che mi ha sorpreso tantissimo capire come questi sono fatti e quali sono i problemi che sono stati affrontati dall'azienda per rendere possibile un sistema di tracciamenti molto complesso che funzioni in ogni browser. Particolarmente difficile infatti l'implementazione per i browser vecchi come Internet Explorer 9 e quelli non permissivi come Safari.\\
+Ho compreso anche molti aspetti del linguaggio Javascript come il concetto di ereditarietà prototipata e l'uso di tantissime librerie a me prima sconosciute.\\
+Per quanto riguarda la parte server sono stato contento di riutilizzare il linguaggio Scala che trovo sia un linguaggio sempre più in crescita grazie appunto alla possibilità di scalare orizzontalmente. In particolar modo mi ha colpito l'utilizzo dei servizi Amazon che non avevo mai compreso appieno non lavorando in progetti che necessitano l'elaborazione di grandi quantità di dati.\\
+Sono stato molto sorpreso anche dalle attività dell'ultima fase, che pensavo molto più semplici. La manutenzione di un progetto così vasto lato user experience infatti necessità l'utilizzo di framework che non conoscevo e delle rigide regole per evitare che si crei poi molto codice impossibile da riutilizzare o da modificare.\\
+Per ultima cosa, ma sicuramente la più importante, ho apprezzato moltissimo interfacciarmi col mondo del lavoro e capire come effettivamente funzioni un azienda e come si lavori in un team aziendale con molta esperienza. Mi ritengo fortunato che grazie a questo progetto ho dovuto interagire con quattro team differenti andando ad avere quindi nozioni diverse da diverse persone.\\
 
+\chapter{Bibliografia}
 
+\thispagestyle{empty}
+%\cfoot{}
+%\rfoot{\thepage \hspace{1pt} di \pageref{LastPage}} % not working
 
-
+\rowcolors{2}{white}{white}
+\begin{tabular}{ m{2em} m{28em} }
+%TODO da fare
+|1| & Snowplow wiki. URL \url{https://github.com/snowplow/snowplow/wiki} \\
+    & \\
+|2| & Cay Horstmann. Scala for impatient. Url \url{http://horstmann.com/scala}\\
+	& \\
+|3| & Documentazione ufficiale Apache Spark. URL \url{http://spark.apache.org/docs/1.5.2}\\
+	& \\
+|4| & Documentazione ufficiale Elasticsearch. URL \url{https://www.elastic.co/guide/index.html}\\
+	& \\
+|5| & 
+\end{tabular}
+%\backmatter
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -732,60 +755,56 @@ Tutti i seguenti obiettivi devono essere implementati all'interno di una dashboa
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-\chapter{Old stuff}
-\subsubsection{Tracciamento eventi - libreria dei tracciamenti}
-Inoltre si è scelto di aggiungere alla libreria la logica per tracciare questi eventi in automatico, cioè senza aggiunte di codice lato client in pagina, per facilitare ulteriormente i tracciamenti non solo per il \gloss{widget} raccomandativo ma anche per qualunque altra pagina web che necessiti di tracciare eventi come click, load, impression o altri eventi che verranno aggiunti in futuro.\\
-Questo ha provocato una modifica al mio piano di lavoro immettendo qualche giorno di lavoro (stimati cinque) per studiare la libreria dei tracciamenti, le tecnologie utilizzate, progettare come apportare le modifiche e svilupparle prima dello sviluppo del resto del progetto.\\
+%\chapter{Old stuff}
+%\subsubsection{Tracciamento eventi - libreria dei tracciamenti}
+%Inoltre si è scelto di aggiungere alla libreria la logica per tracciare questi eventi in automatico, cioè senza aggiunte di codice lato client in pagina, per facilitare ulteriormente i tracciamenti non solo per il \gloss{widget} raccomandativo ma anche per qualunque altra pagina web che necessiti di tracciare eventi come click, load, impression o altri eventi che verranno aggiunti in futuro.\\
+%Questo ha provocato una modifica al mio piano di lavoro immettendo qualche giorno di lavoro (stimati cinque) per studiare la libreria dei tracciamenti, le tecnologie utilizzate, progettare come apportare le modifiche e svilupparle prima dello sviluppo del resto del progetto.\\
 
-\subsubsection{Raccolta ed elaborazione dati tracciamenti}
-La libreria dei tracciamenti di THRON utilizza \gloss{snowplow}, una libreria atta appunto a tracciare eventi anche personalizzati. Grazie a questa tecnologia tutti i dati relativi ai tracciamenti restano proprietari dell'azienda al contrario di altri servizi di tracciamenti come Google Analytics. Il vantaggio di snowplow è sicuramente il fatto di essere proprietari di tutti i dati tracciati e la totale personalizzazione che si può fare, sia negli eventi da tracciare sia nelle fasi successive di elaborazione di questi dati. Il lato negativo è che bisogna scriversi tutto il codice necessario per gli eventi personalizzati e scrivere il codice dei software che ricevono i tracciamenti, che gli elaborano e che li mettono a disposizione di eventuali client.\\
-I dati tracciati dalla libreria javascript presente in tutte le pagine necessarie vengono raccolti in un collector che può essere visto come un calderone in cui arrivano e vengono raggruppati tutti gli eventi tracciati.
-Questi dati vengono letti da un enricher, realizzato con \gloss{Apache Spark}, che si occupa di arricchirli con altre informazioni, ad esempio viene effettuato il \gloss{merge} dei contatti, questo va a rendere possibili filtraggi molto mirati e analisi di dati per strategie business impossibili altrimenti.\\
+%\subsubsection{Raccolta ed elaborazione dati tracciamenti}
+%La libreria dei tracciamenti di THRON utilizza \gloss{snowplow}, una libreria atta appunto a tracciare eventi anche personalizzati. Grazie a questa tecnologia tutti i dati relativi ai tracciamenti restano proprietari dell'azienda al contrario di altri servizi di tracciamenti come Google Analytics. Il vantaggio di snowplow è sicuramente il fatto di essere proprietari di tutti i dati tracciati e la totale personalizzazione che si può fare, sia negli eventi da tracciare sia nelle fasi successive di elaborazione di questi dati. Il lato negativo è che bisogna scriversi tutto il codice necessario per gli eventi personalizzati e scrivere il codice dei software che ricevono i tracciamenti, che gli elaborano e che li mettono a disposizione di eventuali client.\\
+%I dati tracciati dalla libreria javascript presente in tutte le pagine necessarie vengono raccolti in un collector che può essere visto come un calderone in cui arrivano e vengono raggruppati tutti gli eventi tracciati.
+%Questi dati vengono letti da un enricher, realizzato con \gloss{Apache Spark}, che si occupa di arricchirli con altre informazioni, ad esempio viene effettuato il \gloss{merge} dei contatti, questo va a rendere possibili filtraggi molto mirati e analisi di dati per strategie business impossibili altrimenti.\\
 %TODO AGGIUNGERE IMG snowplow
-I dati a questo punto vengono elaborati ulteriormente da diversi enricher (altre istanze Spark) ed ognuno aggiunge informazioni utili per diversi scopi. Al momento ne hanno tre:
-\begin{itemize}
-\item Recommendation: questo contiene tutta la logica per la raccomandazione dei contenuti e l'aggiunta di importanti informazioni
-\item Behaviour: questo serve per analizzare il comportamento degli utenti 
-\item Reports: questo serve per arricchire con moltissimi dati gli eventi per rendere possibile la fruizione di informazioni utili per business strategy
-\end{itemize}
-Tutte queste istanze salvano poi i dati in diversi Elasticsearch che possono essere interrogati da web services appositi dall'esterno.\\
-Andando ad aggiungere nuovi eventi è necessario modificare il primo enricher comune per aggiungere il support a questi nuovi eventi. Per i tre enricher specifici invece è necessario effettuare queste modifiche:
-\begin{itemize}
-\item Recommendation: filtrare i nuovi eventi, per ora gli algoritmi di raccomandazione non utilizzeranno impressions e interacts. Questa è una modifica che sarà effettuata nel prossimo futuro poiché non banale da applicare. Infatti il recommendation utilizza algoritmi di machine learning per essere più preciso ed efficiente
-\item Behaviour: anche in questo caso filtrare i nuovi eventi, come per il recommendation sono modifiche da applicare con molta cautela in algoritmi delicati e lo stage non prevede abbastanza tempo
-\item Reports: qui al contrario bisogna fare in modo che i nuovi eventi vengano letti, elaborati ed arricchiti con tutte le informazioni necessarie. Inoltre i dati che vengono salvati su Elasticsearch è necessario indicizzarli raggruppandoli per tipo di evento per maggiore ordine
-\end{itemize}
-I web services per ricavare questi di dati verranno sviluppati da altri membri del team di Intelligence essendo presenti già servizi molto simili sono modifiche che applicheranno molto velocemente.
+%I dati a questo punto vengono elaborati ulteriormente da diversi enricher (altre istanze Spark) ed ognuno aggiunge informazioni utili per diversi scopi. Al momento ne hanno tre:
+%\begin{itemize}
+%\item Recommendation: questo contiene tutta la logica per la raccomandazione dei contenuti e l'aggiunta di importanti informazioni
+%\item Behaviour: questo serve per analizzare il comportamento degli utenti 
+%\item Reports: questo serve per arricchire con moltissimi dati gli eventi per rendere possibile la fruizione di informazioni utili per business strategy
+%\end{itemize}
+%Tutte queste istanze salvano poi i dati in diversi Elasticsearch che possono essere interrogati da web services appositi dall'esterno.\\
+%Andando ad aggiungere nuovi eventi è necessario modificare il primo enricher comune per aggiungere il support a questi nuovi eventi. Per i tre enricher specifici invece è necessario effettuare queste modifiche:
+%\begin{itemize}
+%\item Recommendation: filtrare i nuovi eventi, per ora gli algoritmi di raccomandazione non utilizzeranno impressions e interacts. Questa è una modifica che sarà effettuata nel prossimo futuro poiché non banale da applicare. Infatti il recommendation utilizza algoritmi di machine learning per essere più preciso ed efficiente
+%\item Behaviour: anche in questo caso filtrare i nuovi eventi, come per il recommendation sono modifiche da applicare con molta cautela in algoritmi delicati e lo stage non prevede abbastanza tempo
+%\item Reports: qui al contrario bisogna fare in modo che i nuovi eventi vengano letti, elaborati ed arricchiti con tutte le informazioni necessarie. Inoltre i dati che vengono salvati su Elasticsearch è necessario indicizzarli raggruppandoli per tipo di evento per maggiore ordine
+%\end{itemize}
+%I web services per ricavare questi di dati verranno sviluppati da altri membri del team di Intelligence essendo presenti già servizi molto simili sono modifiche che applicheranno molto velocemente.
 
-\subsection{Analisi fase 2}
-Successivamente ho partecipato a delle riunioni col team Core per capire come rendere disponibili ai clienti i dati relativi alla quantità di raccomandazioni fatte dalle loro applicazioni. Questo è molto importante poiché i clienti al momento dell'acquisto dello strumento di raccomandazioni possono scegliere diversi Business Model che prevedono una quantità di raccomandazioni massima prefissata. Superata questa soglia lo strumento non raccomanda più secondo algoritmi intelligenti ma propone solo contenuti simili.\\
-THRON possiede un \gloss{Elasticsearch} in cui vengono immagazzinati tutti gli accessi a tutte le loro API. Tuttavia questi dati vengono salvati per un massimo di sessanta giorni poiché la mole di dati è non indifferente (si parla di almeno quattro gigabyte di log di accessi al giorno contando solo gli accessi alle API, senza contare quindi le fruizioni delle loro \gloss{cdn}).\\I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari andasse ad interrogare l'Elasticsearch di monitoring, ricavasse tutte le informazioni riguardanti gli accessi alle raccomandazioni e le andasse a salvare in qualche altro database.\\I grafici potranno avere una granularità oraria, giornaliera o mensile dovranno essere quindi salvati i dati raggruppati per queste granularità per avere un output immediato.\\Per rendere poi questi dati accessibili all'esterno della rete aziendale è necessario anche creare dei webservices da aggiungere a quelli già esistenti in THRON. Questo lavoro mi era di molto facilitato grazie al fatto che ci fossero già molti altri webservices, infatti potevo riutilizzare molti componenti già esistenti come il meccanismo di autenticazione e meccanismi di accesso ai database.\\
-Essendo la quantità di dati elevata di è deciso, qual'ora il tempo lo permettesse, di aggiungere anche un servizio che andasse a ripulire i dati più vecchi di due anni con granularità maggiore di quella mensile.
+%\subsection{Analisi fase 2}
+%Successivamente ho partecipato a delle riunioni col team Core per capire come rendere disponibili ai clienti i dati relativi alla quantità di raccomandazioni fatte dalle loro applicazioni. Questo è molto importante poiché i clienti al momento dell'acquisto dello strumento di raccomandazioni possono scegliere diversi Business Model che prevedono una quantità di raccomandazioni massima prefissata. Superata questa soglia lo strumento non raccomanda più secondo algoritmi intelligenti ma propone solo contenuti simili.\\
+%THRON possiede un \gloss{Elasticsearch} in cui vengono immagazzinati tutti gli accessi a tutte le loro API. Tuttavia questi dati vengono salvati per un massimo di sessanta giorni poiché la mole di dati è non indifferente (si parla di almeno quattro gigabyte di log di accessi al giorno contando solo gli accessi alle API, senza contare quindi le fruizioni delle loro \gloss{cdn}).\\I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari andasse ad interrogare l'Elasticsearch di monitoring, ricavasse tutte le informazioni riguardanti gli accessi alle raccomandazioni e le andasse a salvare in qualche altro database.\\I grafici potranno avere una granularità oraria, giornaliera o mensile dovranno essere quindi salvati i dati raggruppati per queste granularità per avere un output immediato.\\Per rendere poi questi dati accessibili all'esterno della rete aziendale è necessario anche creare dei webservices da aggiungere a quelli già esistenti in THRON. Questo lavoro mi era di molto facilitato grazie al fatto che ci fossero già molti altri webservices, infatti potevo riutilizzare molti componenti già esistenti come il meccanismo di autenticazione e meccanismi di accesso ai database.\\
+%Essendo la quantità di dati elevata di è deciso, qual'ora il tempo lo permettesse, di aggiungere anche un servizio che andasse a ripulire i dati più vecchi di due anni con granularità maggiore di quella mensile.
 
-\subsection{Analisi fase 3}
-Infine sono state fatte le analisi per discutere come presentare questi dati ai clienti.\\
-col team di design si sono scelti i tipi dei grafici da presentare per ottenere una maggior usabilità possibile e per rendere i dati di facile comprensione, cosa non banale avendo moltissime informazioni da esporre.\\
-Col team UX si è discusso invece di come integrare questi grafici nel loro software in cui sono già presenti molti grafici per la presentazione di informazioni di Intelligence. TODO aggiungere img grafici intelligence\\
-
-
+%\subsection{Analisi fase 3}
+%Infine sono state fatte le analisi per discutere come presentare questi dati ai clienti.\\
+%col team di design si sono scelti i tipi dei grafici da presentare per ottenere una maggior usabilità possibile e per rendere i dati di facile comprensione, cosa non banale avendo moltissime informazioni da esporre.\\
+%Col team UX si è discusso invece di come integrare questi grafici nel loro software in cui sono già presenti molti grafici per la presentazione di informazioni di Intelligence. TODO aggiungere img grafici intelligence\\
 
 
-\subsection{Tecnologie utilizzate}
 
-\subsubsection{Javascript}
-Javascript è un linguaggio di scripting orientato agli oggetti e agli eventi. Principalmente è utilizzato per la programmazione lato Client negli ambienti Web per aggiungere funzionalità, effetti dinamici o interattività alle pagine o applicazioni web.\\
-Da qualche tempo è però utilizzato in molti altri ambiti come la programmazione di applicazioni mobile tramite frameworks come ionic o appcelerator.\\
-Essendo Thron una piattaforma web Javascript è un linguaggio pressoché obbligatorio da imparare per lavorare in azienda.\\
-Nel mio stage l'ho utilizzato largamente per apportare le modifiche alla libreria dei tracciamenti visto che quest'ultima è interamente una libreria realizzata in javascript.\\ %In più l'ho utilizzato anche per aggiungere il tracciamento automatico nei widget di raccomandazione, essendo anche quest'ultimi realizzati in javascript.\\
-Ho utilizzato diverse librerie come \textbf{Lodash}, \textbf{CommonJS}, \textbf{snowplow}, 	\textbf{jQuery}, \textbf{Bootstrap} e \textbf{grunt}.\\
-Inoltre ho utilizzato javascript anche per l'esposizione dei dati, ovvero per la creazione della console in cui sono esposti dei grafici come spiegato nei capitoli a seguire. Per questi l'azienda mi ha dato piena facoltà di scegliere e decidere cosa usare così ho studiato e provato le tre librerie che mi sembravano più adatte: \textbf{FusionCharts}, \textbf{KendoUI} e \textbf{d3js}.\\ \\
-FusionCharts è una libreria a pagamento nata nel 2003 e offre una vasta gamma di diagrammi, mappe, widgets e dashboards già fatti con cui arricchire i propri siti o applicazioni web. Dopo averla provata è risultata essere molto facile da imparare e immediata all'uso, quasi non necessita di conoscenze di programmazione. Molto belli e veloci i risultati che si possono ottenere tuttavia meno personalizzabili delle altre librerie provate proprio per la sua grande semplicità. Un altro punto a favore è la retro compatibilità molto estesa e resa automatica dalla libreria.\\
-D3js, che sta per data driven documents, è un altra libreria nata nel 2011 per la visualizzazione dinamica e interattiva di dati organizzati, quindi offre funzionalità a basso livello per creare grafici. Si può arrivare a dei risultati sbalorditivi e davvero di forte impatto, tuttavia a me non servivano diagrammi particolarmente complessi e in più necessita di molto più lavoro per ottenere buoni risultati. In questo caso la retro compatibilità non è sempre garantita per le versioni dei browser non recenti.\\
-KendoUI è un framework che offre una grandissima quantità di funzionalità built-in ma io mi sono concentrato nelle API per creare grafici. Anche in questo caso molto semplice da usare, risultati immediati e molto belli, in più offre più personalizzazione e una buona retro compatibilità.\\
-La scelta è ricaduta su FusionCharts poichè molti grafici già realizzati da THRON sono creati usando questa libreria, quindi risultava essere tutto più omogeneo utilizzando la stessa, inoltre essendo un pò stretti con i tempi l'uso di FusionCharts ho pensato potesse aiutare a farmi rientrare nei tempi.\\
 
-\subsubsection{HTML e CSS}
-Naturalmente per la creazione dei grafici e l'integrazione in \gloss{bacheca} ho utilizzato anche questi linguaggi.\\Le ho utilizzate anche per creare delle pagine di demo e di test per il \gloss{parser} creato per effettuare i tracciamenti in automatico.
+%\subsection{Tecnologie utilizzate}
+
+%\subsubsection{Javascript}
+%Javascript è un linguaggio di scripting orientato agli oggetti e agli eventi. Principalmente è utilizzato per la programmazione lato Client negli ambienti Web per aggiungere funzionalità, effetti dinamici o interattività alle pagine o applicazioni web.\\
+%Da qualche tempo è però utilizzato in molti altri ambiti come la programmazione di applicazioni mobile tramite frameworks come ionic o appcelerator.\\
+%Essendo Thron una piattaforma web Javascript è un linguaggio pressoché obbligatorio da imparare per lavorare in azienda.\\
+%Nel mio stage l'ho utilizzato largamente per apportare le modifiche alla libreria dei tracciamenti visto che quest'ultima è interamente una libreria realizzata in javascript.\\ %In più l'ho utilizzato anche per aggiungere il tracciamento automatico nei widget di raccomandazione, essendo anche quest'ultimi realizzati in javascript.\\
+%Ho utilizzato diverse librerie come \textbf{Lodash}, \textbf{CommonJS}, \textbf{snowplow}, 	\textbf{jQuery}, \textbf{Bootstrap} e \textbf{grunt}.\\
+%Inoltre ho utilizzato javascript anche per l'esposizione dei dati, ovvero per la creazione della console in cui sono esposti dei grafici come spiegato nei capitoli a seguire. Per questi l'azienda mi ha dato piena facoltà di scegliere e decidere cosa usare così ho studiato e provato le tre librerie che mi sembravano più adatte: \textbf{FusionCharts}, \textbf{KendoUI} e \textbf{d3js}.\\ \\
+
+%\subsubsection{HTML e CSS}
+%Naturalmente per la creazione dei grafici e l'integrazione in \gloss{bacheca} ho utilizzato anche questi linguaggi.\\Le ho utilizzate anche per creare delle pagine di demo e di test per il \gloss{parser} creato per effettuare i tracciamenti in automatico.
 
 % vari TODO
 % dire cosa c'era nella track lib
@@ -794,48 +813,48 @@ Naturalmente per la creazione dei grafici e l'integrazione in \gloss{bacheca} ho
 
 % TODO dire della box di consigli per la raccomandazione che non c'era tempo e verrà sviluppata in futuro
 
-\section{Progettazione e sviluppo}
+%\section{Progettazione e sviluppo}
 
-\chapter{Chapter title} %------------------------------ CHAPTER TITLE
-\thispagestyle{empty}
+%\chapter{Chapter title} %------------------------------ CHAPTER TITLE
+%\thispagestyle{empty}
 
-\section{Section title}
-Sed varius rhoncus libero a consequat. Cras facilisis magna eget tellus laoreet sit amet mattis nulla posuere. Nullam magna est, porta a feugiat quis, mollis vel urna. Nunc ante dolor, pretium eget laoreet in, tincidunt vitae ipsum. Nulla et diam risus. Ut auctor auctor vestibulum. Vestibulum vitae turpis sit amet lacus pulvinar dictum laoreet vitae enim. Aliquam erat volutpat. Aliquam ultricies posuere sem, ac mollis nunc interdum in. Vivamus tempor felis a tellus volutpat ut elementum lorem congue. Proin purus tortor, ultricies vitae viverra non, feugiat ac felis. Fusce condimentum dignissim volutpat. Proin quis augue ac tortor mollis congue at et magna. Nullam a velit est, nec ultrices justo (\seename\ \figurename~\ref{unipd-logo}).
+%\section{Section title}
+%Sed varius rhoncus libero a consequat. Cras facilisis magna eget tellus laoreet sit amet mattis nulla posuere. Nullam magna est, porta a feugiat quis, mollis vel urna. Nunc ante dolor, pretium eget laoreet in, tincidunt vitae ipsum. Nulla et diam risus. Ut auctor auctor vestibulum. Vestibulum vitae turpis sit amet lacus pulvinar dictum laoreet vitae enim. Aliquam erat volutpat. Aliquam ultricies posuere sem, ac mollis nunc interdum in. Vivamus tempor felis a tellus volutpat ut elementum lorem congue. Proin purus tortor, ultricies vitae viverra non, feugiat ac felis. Fusce condimentum dignissim volutpat. Proin quis augue ac tortor mollis congue at et magna. Nullam a velit est, nec ultrices justo (\seename\ \figurename~\ref{unipd-logo}).
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[height=6cm]{images/unipd-light.png}
-  \caption{Image caption}\label{unipd-logo}
-\end{figure}
+%\begin{figure}[ht]
+%  \centering
+%  \includegraphics[height=6cm]{images/unipd-light.png}
+%  \caption{Image caption}\label{unipd-logo}
+%\end{figure}
 
-\subsection{Sub-section title}
-\begin{wrapfigure}{r}{3cm}
-  \vspace{-20pt}
-  \begin{center}
-  \includegraphics[width=2cm]{images/unipd-bn.png}
-  \end{center}
-  \vspace{-10pt}
-\end{wrapfigure}
+%\subsection{Sub-section title}
+%\begin{wrapfigure}{r}{3cm}
+%  \vspace{-20pt}
+%  \begin{center}
+%  \includegraphics[width=2cm]{images/unipd-bn.png}
+%  \end{center}
+%  \vspace{-10pt}
+%\end{wrapfigure}
 
-Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas (\seename\ \lstlistingname~\ref{listing01}). Suspendisse arcu magna, faucibus ut tincidunt non, ultrices ut turpis. Nullam tristique vehicula massa, id commodo orci sollicitudin vel. Donec nibh ante, ultrices non facilisis sed, mattis id ligula. Sed sed orci sit amet nulla egestas gravida. Suspendisse laoreet, massa vel sagittis gravida, lectus ligula feugiat risus, a aliquam dolor eros ac orci. Nulla egestas tortor quis nunc scelerisque sed tincidunt massa scelerisque. Pellentesque vulputate pharetra lectus, vitae ultricies nisi luctus eu. Nam congue dui eu quam euismod vitae fermentum sem vehicula. Etiam ac leo id nisi placerat posuere. Curabitur mattis augue eget dolor tempus accumsan consequat diam imperdiet. Sed tristique orci id lacus vulputate rhoncus. Morbi tincidunt ante sed turpis luctus tincidunt et sit amet augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc viverra urna non libero sodales euismod et eleifend sapien. Donec aliquet risus non massa dignissim sollicitudin. Integer a ligula eros. Morbi et lacinia augue~\cite{bookname}.
+%Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas (\seename\ \lstlistingname~\ref{listing01}). Suspendisse arcu magna, faucibus ut tincidunt non, ultrices ut turpis. Nullam tristique vehicula massa, id commodo orci sollicitudin vel. Donec nibh ante, ultrices non facilisis sed, mattis id ligula. Sed sed orci sit amet nulla egestas gravida. Suspendisse laoreet, massa vel sagittis gravida, lectus ligula feugiat risus, a aliquam dolor eros ac orci. Nulla egestas tortor quis nunc scelerisque sed tincidunt massa scelerisque. Pellentesque vulputate pharetra lectus, vitae ultricies nisi luctus eu. Nam congue dui eu quam euismod vitae fermentum sem vehicula. Etiam ac leo id nisi placerat posuere. Curabitur mattis augue eget dolor tempus accumsan consequat diam imperdiet. Sed tristique orci id lacus vulputate rhoncus. Morbi tincidunt ante sed turpis luctus tincidunt et sit amet augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc viverra urna non libero sodales euismod et eleifend sapien. Donec aliquet risus non massa dignissim sollicitudin. Integer a ligula eros. Morbi et lacinia augue~\cite{bookname}.
 
-\begin{lstlisting}[caption={caption text},label=listing01]
-<p>
-Pellentesque ac tortor eget eros iaculis euismod
-vitae vitae augue.
-</p>
-<!-- comment -->
-\end{lstlisting}
+%\begin{lstlisting}[caption={caption text},label=listing01]
+%<p>
+%Pellentesque ac tortor eget eros iaculis euismod
+%vitae vitae augue.
+%</p>
+%<!-- comment -->
+%\end{lstlisting}
 
 
-\backmatter
+%\backmatter
 
-\begingroup %------------------------------ BIBLIOGRAPHY
-  \makeatletter
-  \let\ps@plain\ps@empty
-  \makeatother
-  \bibliography{template-thesis}
-  \addcontentsline{toc}{chapter}{Bibliography}
-  \bibliographystyle{ieeetr} % sort in order of appearance
-\endgroup
+%\begingroup %------------------------------ BIBLIOGRAPHY
+%  \makeatletter
+%  \let\ps@plain\ps@empty
+%  \makeatother
+%  \bibliography{template-thesis}
+%  \addcontentsline{toc}{chapter}{Bibliography}
+%  \bibliographystyle{ieeetr} % sort in order of appearance
+%\endgroup
 \end{document} 
