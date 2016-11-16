@@ -408,10 +408,10 @@ Gli obiettivi di questa fase mirano a sviluppare il necessario per la raccolta e
 	\item Android 4.1 e successivi: Chrome tutte le versioni
 	\item IOS 4.x e successivi: Safari 4 e successivi, Chrome tutte le versioni
 	\end{itemize}
-\item Dovrà essere modificato l'\gloss{enricher} per aggiungere il supporto ai nuovi eventi
-\item L'\gloss{enricher} dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento
-\item Aggiungere al modulo dei \gloss{Reports} il supporto ai nuovi eventi
-\item Far si che gli altri \gloss{moduli di Intelligence} ignorino questi nuovi eventi
+\item Dovrà essere modificato l'enricher per aggiungere il supporto ai nuovi eventi
+\item L'enricher dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento
+\item Aggiungere al modulo Reports il supporto ai nuovi eventi
+\item Far si che gli altri moduli di Intelligence ignorino questi nuovi eventi
 \end{itemize}
 \textbf{Desiderabili:}
 \begin{itemize}
@@ -426,7 +426,7 @@ Gli obiettivi di questa fase mirano a sviluppare il necessario per la raccolta e
 \end{enumerate}
 \textbf{Obbligatori:}
 \begin{itemize}
-	\item Creare un servizio che interroghi \gloss{Elasticsearch} di monitoring, ricavi i dati degli accessi alle raccomandazioni e li salvi in un database
+	\item Creare un servizio che interroghi Elasticsearch di monitoring, ricavi i dati degli accessi alle raccomandazioni e li salvi in un database
 	\begin{itemize}
 		\item Questo servizio deve salvare gli accessi con granularità oraria
 		\item Questo servizio deve salvare gli accessi con granularità giornaliera
@@ -547,7 +547,7 @@ Nel progetto mi sono interfacciato con diverse istanze di Elasticsearch poichè 
 
 \subsubsection{Analisi tracciamenti}
 \label{analisi-pcr}
-Per prima cosa si è scelto di analizzare come raccogliere i dati necessari per poter capire e fornire al cliente delle metriche e valutazioni di efficienza dello strumento \gloss{PCR}. Infatti i clienti tra le richieste volevano sapere quanto efficace il \gloss{PCR} fosse, questo però è un concetto non basilare e non definito dai clienti stessi perciò molto tempo dell'analisi è stato impiegato a pensare come valutare questo.\\
+Per prima cosa si è scelto di analizzare come raccogliere i dati necessari per poter capire e fornire al cliente delle metriche e valutazioni di efficienza dello strumento PCR. Infatti i clienti tra le richieste volevano sapere quanto efficace il PCR fosse, questo però è un concetto non basilare e non definito dai clienti stessi perciò molto tempo dell'analisi è stato impiegato a pensare come valutare questo.\\
 Ho collaborato con il team di Intelligence e con uno \gloss{data scientist} per cercare di definire questo concetto. Sono state vagliate diverse proposte interne e fatte diverse ricerche in internet, alla fine si è scelto l'approccio che conciliasse una buona precisione sull'efficacia dello strumento dovendo però rientrare in tempi non molto lunghi per i vincoli di stage.\\
 La definizione risultate è la seguente:\\
 per ogni contenuto devono essere tracciate almeno tre azioni:
@@ -620,9 +620,9 @@ Ho reso poi il parser parametrico, utile in particolar modo la possibilità di s
 Ho creato inoltre delle pagine di demo apposite piene di immagini con tutti i casi limite a cui ho pensato per provare il modulo e per rendere anche più facile la comprensione per chi dovrà mantenerlo, mi sono ispirato infatti alle pagine di demo già presenti nella libreria dei tracciamenti che mi hanno aiutato moltissimo nella comprensione del software.\\
 Il parser inoltre non analizza soltanto il codice HTML nel momento della sua istanziazione ma attraverso l'uso di \gloss{mutation observers} continua ad ascoltare per cambiamenti nel \gloss{DOM}. Se ne avvengono nella parte di HTML che è stato istruito di analizzare controlla se questi cambiamenti contengono le classi di interesse o se vengono aggiunti elementi in pagina in un secondo momento, questo ultimo fattore rende tutto il tracciamento automatico senza aggiunta di codice in pagina come richiesto, eccetto una riga per istanziare il parser che è inevitabile.\\
 Ho poi aggiunto le logiche per automatizzare i tracciamenti. Per l'evento load la logica era molto semplice: load sta a significare che il contenuto è stato caricato in pagina, perciò il parser non appena trova un contenuto che nella classe gli dice di tracciare l'evento load lancia l'evento.\\
-Per il click è similmente facile, basta aggiungere un \gloss{listener} all'elemento HTML che al click dell'utente fa partire l'evento.\\
+Per il click è similmente facile, basta aggiungere un listener all'elemento HTML che al click dell'utente fa partire l'evento.\\
 Un altra storia è per l'evento impression: questo evento deve essere lanciato quando l'immagine in pagina entra nella \gloss{viewport} dell'utente. Ho cercato molto online, sono presenti diverse librerie che cercano di risolvere il problema ma tutte hanno diversi problemi quindi ho sviluppato io la logica.\\
-L'idea di base è aggiungere dei \gloss{listener} allo scroll della pagina e fare dei controlli sulla posizione degli elementi rispetto alla pagina, il tutto era già fatto dagli script che si possono trovare con una piccola ricerca online ma il problema diventa più complesso quando si iniziano a considerare altri aspetti come lo scrolling orizzontale e il fatto che un elemento può essere all'interno di un \gloss{DIV} anch'esso scrollabile.\\
+L'idea di base è aggiungere dei listener allo scroll della pagina e fare dei controlli sulla posizione degli elementi rispetto alla pagina, il tutto era già fatto dagli script che si possono trovare con una piccola ricerca online ma il problema diventa più complesso quando si iniziano a considerare altri aspetti come lo scrolling orizzontale e il fatto che un elemento può essere all'interno di un \gloss{DIV} anch'esso scrollabile.\\
 Ho quindi creato una funzione che analizza la posizione di un elemento rispetto alla pagina e rispetto al primo e al secondo elemento HTML scrollabile tra i suoi \gloss{ascendants} nel caso ci siano.\\
 Ho scelto di non andare oltre al secondo livello di parentela per due motivi:
 \begin{itemize}
@@ -665,14 +665,14 @@ Inoltre la quantità di dati da salvare non è molto grande ma si parla comunque
 \subsubsection{Progettazione e sviluppo seconda fase}
 Per prima cosa mi è stato chiesto di pensare alle firme di tutti i servizi da creare. THRON mantiene tutta l'architettura software in un progetto di \gloss{Enterprise Architect} tramite diagrammi delle classi e altro ancora.\\
 Hanno sviluppato un plugin che a partire dai diagrammi crea tutte le interfacce scala automaticamente.\\
-Mi hanno dato l'accesso a diverse loro \gloss{repositories} per farmi familiarizzare con il loro lato server, questo mi ha aiutato molto per la stesura delle firme dei vari metodi, anche perché la serie di web services per l'interrogazione dei reports già esistente era comunque simile a ciò che dovevo fare io. Sfruttando anche l'ereditarietà e i mixin Scala ho potuto riutilizzare parte del loro codice anche per le firme.\\
+Mi hanno dato l'accesso a diverse loro repositories per farmi familiarizzare con il loro lato server, questo mi ha aiutato molto per la stesura delle firme dei vari metodi, anche perché la serie di web services per l'interrogazione dei reports già esistente era comunque simile a ciò che dovevo fare io. Sfruttando anche l'ereditarietà e i mixin Scala ho potuto riutilizzare parte del loro codice anche per le firme.\\
 Concordate le firme il team Core le ha aggiunte alla loro infrastruttura e ha generato le interfacce. Ho dovuto quindi creare le implementazioni di quest'ultime e per la parte di web services ho seguito molto quelli già esistenti. Questo mi ha facilitato il lavoro, ho potuto riutilizzare componenti di utilità già scritti da THRON come i servizi per l'autenticazione e dei meccanismi per l'accesso al database.\\
-Si è scelto di usare un \gloss{MongoDB} per il salvataggio dei dati per due motivi:
+Si è scelto di usare un MongoDB per il salvataggio dei dati per due motivi:
 \begin{itemize}
 	\item Il team Core faceva già un grande uso di questo database, c'erano già quindi classi di utilità per l'utilizzo di quest'ultimo
 	\item I dati da salvare non erano di tipo relazionale quindi era più idoneo usare un database NoSQL
 \end{itemize}
-Ho implementato, sempre anche grazie all'aiuto dell'azienda, i servizi per l'estrazione dei dati da Elasticsearch e il salvataggio in \gloss{MongoDB}.\\
+Ho implementato, sempre anche grazie all'aiuto dell'azienda, i servizi per l'estrazione dei dati da Elasticsearch e il salvataggio in MongoDB.\\
 Per fare in modo che il servizio fosse eseguito ogni ora il team Core mi ha fornito l'accesso allo strumento di notifiche amazon, Amazon SNS. Hanno implementato diverse code di sottoscrizione con intervalli orari diversi per ogni necessità. Sottoscrivendo un servizio ad una di queste code Amazon SNS provvede automaticamente a risvegliare, tramite una \gloss{notifica push}, i servizi sottoscritti.\\
 Ho dovuto quindi tramite configurazione sottoscrivere questo servizio alla coda oraria per far si che fosse schedulato in automatico.\\
 Il scritto il servizio in modo che:
@@ -730,7 +730,33 @@ Ho utilizzato \textit{Knockout.js} che è un framework per l'implementazione di 
 Un altro strumento utile che ho dovuto imparare è stato \textit{tooltipster}. \`{E} un plugin per jQuery che facilita la creazione di \gloss{tooltip} e la gestione di essi, ad esempio per far si che un tooltip si chiuda quando se ne apre un altro.\\
 La parte che mi ha creato più difficoltà è stata la stilizzazione della dashboard, in \gloss{bacheca} utilizzano il framework \textit{SASS} per mantenere il codice CSS più pulito. Questo aggiunge funzionalità come variabili ed ereditarietà ai css e il team utilizza un pattern \gloss{MVC} in tutti i loro CSS. \`{E} stato difficile entrare in sintonia con le loro convenzioni poiché non avevo mai avuto modo di rapportarmi con progetti così complessi. Anche a fine stage non mi reputo ancora in grado di destreggiarmi facilmente in quel progetto ma grazie anche al supporto che mi è stato dato sono riuscito a mantenere una struttura analoga alla loro.\\
 Credevo di avere più problemi per il grande supporto a browser richiesto ma grazie all'uso di molti framework e librerie non ho avuto problemi di questo tipo.\\
-%TODO aggiungere immagini risultati e commentarle un pò.
+Di seguito troviamo delle immagini raffiguranti l'output che un cliente si ritrova. Le immagini sono state prese da degli ambienti di test THRON perciò con dati solamente per scopi di prova.\\
+In \hyperref[grafico-quantitativo]{Figura 3.4} possiamo vedere il grafico che mostra, per una scelta applicazione master raccomandativa, la quantità delle raccomandazioni con granularità oraria e il limite massimo previsto dal proprio business model. 
+\begin{figure}[H]
+	\centering
+	\label{grafico-quantitativo}
+	\includegraphics[width=1.0\textwidth]{images/grafico-quantitativo.jpg}
+	\caption{Grafico quantitativo visibile all'interno della dashboard di una applicazione raccomandativa master}
+\end{figure}
+In \hyperref[grafico-qualitativo-1]{Figura 3.5} possiamo vedere il grafico che mostra, per una scelta applicazione raccomandativa slave, una diagramma a barre con i valori delle impressions e clicks per vari contenuti. Alla destra abbiamo un riassunto in cui sono mostrate le impressions totali dell'applicazione, i clicks totali e due grafici a tag cloud in cui sono presenti nel primo i tag relativi la classe target dei contenuti, mentre in quello sottostante i tag relativi la classe topic dei contenuti. 
+\begin{figure}[H]
+	\centering
+	\label{grafico-qualitativo-1}
+	\includegraphics[width=1.0\textwidth]{images/grafico-qualitativo-1.jpg}
+	\caption{Grafico qualitativo visibile all'interno della dashboard di una applicazione raccomandativa slave}
+\end{figure}
+Al click sulla \gloss{thumbnail} di un contenuto viene aperta una pagina modale che possiamo vedere in \hyperref[grafico-qualitativo-2]{Figura 3.6}. 
+\begin{figure}[H]
+	\centering
+	\label{grafico-qualitativo-2}
+	\includegraphics[width=1.0\textwidth]{images/grafico-qualitativo-2.jpg}
+	\caption{Finestra modale aperta al click sul primo contenuto del grafico visto in \hyperref[grafico-qualitativo-1]{Figura 3.5}}
+\end{figure}
+Nella finestra che viene presentata all'utente si può vedere un riassunto sull'audience dell'utenza a cui è stato proposto il contenuto e che ha espresso interesse.\\
+In particolare oltre ad una descrizione del contenuto e al numero di impression e click ricevuti troviamo informazioni come le tag del contenuto. Sia le tag della classe topic che parlano del contenuto sia quelle della classe target che indicano verso quale tipologia di utenti è orientato il contenuto.\\
+In basso infine è presente un grafico a barre per mostrare un elenco delle tag relative agli utenti a cui è stato proposto il contenuto. Questo è interessante per capire, per le varie tipologie di utenti a cui è stato proposto, quali categorie sono state più interessate.\\
+In basso a destra, invece, un altro grafico a barre che mostra quali tipi di contenuto sono di interesse alle tipologie di utenti a cui è stato proposto il contenuto.\\
+Tutte queste informazioni, oltre a poter dare un indicazione sulla qualità e quantità delle raccomandazioni, può dare spunti per strategie di marketing o di business. Ad esempio può essere interessante vedere che un contenuto che ha come target una certa tipologia di utenti poi susciti interesse non in quella categoria ma bensì in un altra. Potrebbe essere un segnale che indichi che la tipologia assegnata non sia quella giusta o che il contenuto sia fuori tema.\\
 Alla fine di queste attività era finito l'intero periodi di stage per cui non è stato possibile realizzare il meccanismo per la personalizzazione dei widgets di raccomandazione.
 
 \section{Obiettivi raggiunti}
@@ -750,10 +776,10 @@ Alla fine di queste attività era finito l'intero periodi di stage per cui non �
 	Le modifiche devono essere supportato in Safari OSX5 e successivi & Soddisfatto\\
 	Le modifiche devono essere supportato in Android 4.1 e successivi: Chrome tutte le versioni & Soddisfatto\\
 	Le modifiche devono essere supportato in IOS 4.x e successivi: Safari 4 e successivi, Chrome tutte le versioni & Soddisfatto\\
-	Dovrà essere modificato l'\gloss{enricher} per aggiungere il supporto ai nuovi eventi & Soddisfatto\\
-	Aggiungere al modulo dei \gloss{Reports} il supporto ai nuovi eventi & Soddisfatto\\
-	L'\gloss{enricher} dei \gloss{Reports} dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento & Soddisfatto\\
-	Far si che gli altri \gloss{moduli di Intelligence} ignorino questi nuovi eventi & Soddisfatto\\
+	Dovrà essere modificato l'enricher per aggiungere il supporto ai nuovi eventi & Soddisfatto\\
+	Aggiungere al modulo Reports il supporto ai nuovi eventi & Soddisfatto\\
+	L'enricher  Reports dovrà salvare tutti gli eventi in indici diversi raggruppati per tipo di evento & Soddisfatto\\
+	Far si che gli altri moduli di Intelligence ignorino questi nuovi eventi & Soddisfatto\\
 \end{tabular}
 
 \subsection{Prima fase - Desiderabili}
@@ -824,7 +850,7 @@ Questo infatti da l'inizio ad un progetto molto importante poiché l'azienda ha 
 Per quanto riguarda la seconda fase, anche in questo caso l'azienda si è dimostrata soddisfatta degli obiettivi raggiunti. Apprezzato il fatto che si sia creato anche un servizio per ripulire i dati, questo infatti era particolarmente richiesto dal team Core essendo il database in cui scrivevo i dati sotto la loro responsabilità.\\ %TODO contenti anche del monitoring
 La terza fase, a causa dei ritardi provocati dalle attività dei tracciamenti, è stata la meno soddisfacente. Gli obiettivi obbligatori sono stati tutti raggiunti con soddisfazione, tuttavia gli opzionali non sono stati sviluppati.\\
 Durante le attività di analisi relative a quest'ultima parte si è però pensato ed aggiunto uno degli obiettivi facoltativi ovvero sviluppare una sezione in cui vengono dati dei consigli sulle raccomandazioni. Questo obiettivo può in futuro, in seguito a ulteriori analisi, diventare un progetto di stage a se stante molto interessante. Infatti si è pensato che sarà possibile creare una box, al di sotto della dashboard, che dia consigli intelligenti sulle raccomandazioni, andando a suggerire quali contenuti è meglio togliere e quali invece si potrebbero aggiungere presentando ulteriori statistiche più avanzate.\\
-Per quanto riguarda gli obiettivi personali, descritti in todolink, mi ritengo pienamente soddisfatto dell'esperienza fatta. L'uso di diverse tecnologie che mi ha spinto a scegliere questo progetto è stato più che soddisfacente, inoltre ho affrontato problemi che non avrei mai pensato di affrontare nè di risolvere, grazie anche all'aiuto dell'azienda.\\
+Per quanto riguarda gli obiettivi personali, descritti in TODO link, mi ritengo pienamente soddisfatto dell'esperienza fatta. L'uso di diverse tecnologie che mi ha spinto a scegliere questo progetto è stato più che soddisfacente, inoltre ho affrontato problemi che non avrei mai pensato di affrontare nè di risolvere, grazie anche all'aiuto dell'azienda.\\
 Il progetto comunque è stato considerato molto positivo e la maggior parte delle modifiche era in produzione durante la stesura della mia tesi, dandomi così un ulteriore motivo di orgoglio.\\
 
 \section{Competenze acquisite}
@@ -838,9 +864,111 @@ Sono stato molto sorpreso anche dalle attività dell'ultima fase, che pensavo mo
 Per ultima cosa, ma sicuramente la più importante, ho apprezzato moltissimo interfacciarmi col mondo del lavoro e capire come effettivamente funzioni un azienda e come si lavori in un team aziendale con molta esperienza. Mi ritengo fortunato che grazie a questo progetto ho dovuto interagire con quattro team differenti andando ad avere quindi nozioni diverse da diverse persone.\\
 
 \chapter{Glossario}
-\begin{description}
-\item[word]
-red yellow red yellow red yellow red yellow red yellow red yellow red yellow red yellow 
+\begin {description}
+
+% A %
+\item[Ascendant]
+In linguaggio HTML gli ascendant di un elemento sono tutti gli elementi che stanno al di sopra dell'interessato come gerarchia. In una pagina HTML quindi tutti gli elementi in pagina hanno come ultimo ascendant l'elemento HTML.
+
+% B %
+\item[Bacheca]
+\`{E} il software interfaccia web per l'uso della piattaforma THRON. Scritto interamente in Javascript, HTML e CSS espone tutte le funzionalità offerte da THRON tramite una semplice applicazione web.\\
+
+% C %
+\item[CDN]
+Acronimo di Content Delivery Network. Consiste in una rete distribuita di server in diversi data center. Serve per offrire all'utente finale alte performance nell'erogazione di risorse.
+\item[Click]
+Quando si parla di click in questo elaborato si intende l'evento click da tracciare. Questo, come si può intuire, è associato al click sull'elemento HTML stesso.
+\item[CMS]
+Acronimo di Content Management System. Sono applicazioni software per la creazione, gestione e modifica di contenuti digitali attraverso semplici interfacce. Uno dei CSM più famosi è WordPress.
+\item[Codice servizio]
+In THRON il codice servizio è un'istanza della piattaforma configurata per uno specifico utente, ad ogni istanza è associata una stringa per identificarla.
+
+% D %
+\item[Data scientist]
+Una figura, relativamente recente, che ha come compito quello di analizzare e interpretare dati. Nel caso di THRON è una figura che, tramite i dati di intelligence, deve capire come sviluppare algoritmi per migliorare certi aspetti di intelligence, ad esempio il motore raccomandativo.
+\item[Div]
+In HTML è un tag che viene usato per dividere sezioni della pagina o per raggruppare elementi che hanno caratteristiche simili.
+\item[DOM]
+Acronimo di Document Object Model. \`{E} uno standard che definisce l'accesso e la modifica di contenuti, strutture e stile di un documento. Il DOM HTML è uno standard che definisce gli elementi HTML come oggetti, le proprietà, i metodi di accesso e gli eventi di questi.
+
+% E %
+\item[Enterprise Architect]
+Software per la modellazione di diagrammi UML
+
+% F %
+% G %
+% H %
+% I %
+\item[Impression]
+In questo elaborato, concordato con THRON, per impression si intende l'evento che avviene quando un particolare elemento HTML entra nella \gloss{viewport} di un utente durante la navigazione.
+
+% L %
+\item[Load]
+In questo elaborato, concordato con THRON, per load si intende l'evento che avviene quando un particolare elemento HTML viene caricato nella pagina di un utente durante la navigazione.
+\item[Lucene]
+Apache Lucene è un software scritto in Java per la ricerca di testo ad alte prestazioni.
+
+% M %
+\item[Metadati]
+In THRON i metadati sono delle informazioni aggiuntive che si possono associare a contenuti ed utenti. Simili alle tag servono per arricchire con informazioni.
+\item[Mutation observer]
+Danno agli sviluppatori un'opportunità di reagire, tramite callback, a cambiamenti del \gloss{DOM}
+\item[MVC]
+Acronimo di Model View Controller. \`{E} un design pattern software architetturale per dividere logicamente un applicativo in tre macro parti: il Model che gestisce i dati, la logica e le regole dell'applicativo, la View che consiste nella rappresentazione in output delle informazioni e il Controller che accetta input e li converte in comanda per gli altri due moduli.
+\item[MVVM]
+Acronimo di Model View View-Model. \`{E} un design pattern software architetturale. Divide il software in tre macro parti: il Model che contiene il modello dei dati, la logica per accedere e per modificarli, la View che consiste nella rappresentazione in output delle informazioni e il View-Model. Quest'ultimo è un astrazione della View che espone metodi e comandi. In questo pattern per ogni View va effettuato un binding con un View-Model che ne descrive le operazioni possibili.
+
+% N %
+\item[Notifiche push]
+Le notifiche push, al contrario delle notifiche pull nella quale un client deve richiedere informazioni ad un server, sono informazioni inviate da un server. Tipicamente il client deve essere sottoscritto in qualche modo per riceverle.
+
+% O %
+% P %
+\item[Parser]
+Per parser si intende un software che effettua un attività di parsing, ovvero effettua analisi di dati secondo regole formali. Nel caso specifico il parser effettua l'analisi di elementi HTML per cercare elementi da tracciare in pagina.
+\item[Pipeline]
+In ambito software consiste in una catena di processi per produrre un output desiderato. In questo elaborato per pipeline si intende la serie di processi che portano dal tracciamento degli eventi ai dati finali da esporre ai clienti.
+\item[Polyfill]
+\`{E} del codice che implementa feature su web browser che non supporta quest'ultima. Serve quindi a dare una retro compatibilità, per specifiche funzionalità, a browser non più mantenuti.
+\item[Project Management]
+disciplina che consiste nell'iniziare, pianificare e controllare il lavoro di un team per raggiungere specifici obiettivi prefissati.
+\item[Promise]
+Sono oggetti usati per la programmazione asincrona. Rappresenta un valore che può non essere ancora disponibile, ma che può esserlo in futuro.
+
+% Q %
+% R %
+\item[Retention]
+Definisce le politiche di persistenza dei dati per richieste legali e business. In questo elaborato si intende la quantità, obbligatoria per contratto, di tempo per cui i dati devono essere resi disponibili al cliente.
+\item[Reports]
+In THRON i Reports rappresentano i dati, elaborati da una pipeline, che contengono tutte le informazioni necessarie per essere esposti al cliente, di solito interpretati in un grafico.
+
+% S %
+\item[Seek]
+In questo elaborato per Seek si intende l'evento che avviene quando un video, tramite un player THRON, viene scorso in avanti o indietro.
+\item[Sistema di ticketing]
+un sistema software per la gestione e la manutenzione di issues, utile per mantenere ordine e una gerarchia nei problemi riscontrati nel proprio software o nei propri processi.
+
+% T %
+\item[Tag]
+In THRON le Tag sono delle entità da associare a contenuti o utenti per classificarli. Le tag sono organizzate con strutture ad albero perciò un contenuto associato ad una tag 'figlio' eredita automaticamente tutta la gerarchia del tag 'padre'.\\
+Inoltre ci sono diverse classi di tag. Per esempio la classe TOPIC di un contenuto contiene tutte le tag che descrivono l'argomento del contenuto mentre la classe TARGET contiene le tag che descrivo a chi è indirizzato questo contenuto.
+\item[Thumbnail]
+In THRON, una thumbnail è un immagine creata a partire da ogni contenuto.
+\item[Tooltip]
+\`{E} una piccola interfaccia grafica che contiene informazioni o suggerimenti riguardanti un argomento. Di solito le tooltip vengono mostrate quando un utente esprime interesse su un contenuto web cliccando o passando il mouse sopra un elemento.
+
+% U %
+% V %
+\item[Viewport]
+\`{E} un area virtuale usata dai motori di rendering dei browser per determinare come scalare e ridimensionare contenuti in pagina. Rappresenta l'area che l'utente, durante la navigazione web, vede a schermo.
+
+% W %
+\item[Widget]
+Per widget di solito si intende un applicativo software semplice e pronto all'uso o un componente software ready to use da aggiungere al proprio applicativo.\\
+I widgets di cui si parla in questo elaborato sono dei piccoli software javascript da copia incollare nelle proprie pagine web per aggiungere funzionalità.
+
+% Z %
 
 \end{description}
 
