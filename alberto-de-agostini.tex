@@ -146,7 +146,7 @@
  \markboth{}{} % remove header
  \thispagestyle{empty}
  Con il diffondersi di Internet e di servizi web negli ultimi decenni, si sono visti formare, per migliorare marketing e strategie business, molti sistemi per il tracciamento delle azioni intraprese da utenti durante la navigazione. I dati raccolti sono usati per molti aspetti, generalmente strategici o economici. Un modo di utilizzarli al meglio è quello di usare un motore di raccomandazione intelligente per migliorare l'esperienza utente nel proprio servizio o per attirare nuovi clienti.\\
- In questo documento verrà spiegato come è stato implementata un'infrastruttura per la raccolta, analisi e presentazione di dati riguardanti le raccomandazioni e per fornire informazioni riguardo la bontà di queste raccomandazioni. 
+ In questo documento verrà spiegato come è stata implementata un'infrastruttura per la raccolta, analisi e presentazione di dati riguardanti le raccomandazioni e per fornire informazioni riguardo la bontà di queste raccomandazioni. 
 \end{abstract}
 
 \mainmatter
@@ -225,14 +225,14 @@ L'azienda mira ad una vasta ed eterogenea clientela, per questo motivo ha creato
 	\centering
 	\label{thron-marketplace}
 	\includegraphics[width=1.0\textwidth]{images/thron-marketplace.jpg}
-	\caption{THRON marketplace}
+	\caption{THRON Marketplace}
 \end{figure}
 
 L'azienda, nel caso queste soluzioni non siano sufficienti, si propone, qual'ora possibile, di creare e confezionare soluzioni personalizzate e mirate per il caso d'uso specifico del cliente.\\
 
 Le molteplici e diverse richieste da parte dei clienti contribuiscono l'evoluzione della piattaforma che deve innovarsi continuamente per soddisfarli. Ognuna di queste evoluzioni conferisce a THRON una completezza sempre maggiore.\\
 
-In linea generale il client tipo di THRON cerca un modo semplice di gestire una mole di contenuti più o meno grande, di distribuirli su vasta scala sempre mantenendole il controllo.\\
+In linea generale il cliente tipo di THRON cerca un modo semplice di gestire una mole di contenuti più o meno grande, di distribuirli su vasta scala sempre mantenendone il controllo.\\
 
 \newpage{}
 \section{THRON}
@@ -263,20 +263,21 @@ Queste informazioni sono filtrabili per diversi parametri:
 \item Data: impostando un arco di tempo predefinito o inserendo data di inizio e di fine;
 \item Utente o applicazione: vengono visualizzare solo le modifiche fatte da una certa persona o da una speicifica applicazione;
 \item Tipo: per filtrare attraverso le tag o metadati di ogni contenuto;
-\item Azione: per filtrare per azione eseguita, ad esempio per vedere solo le visualizzazioni.
+\item Azione: per filtrare per azione eseguita, ad esempio per vedere solo le
+ visualizzazioni.\\
 \end{enumerate}
-Un esempio si può vedere in \hyperref[content-history]{Figura 1.5}
-\begin{figure}[h] %TODO controllare ad ogni build dove va a finire
+Ogni file viene convertito in diversi formati e dimensioni in modo da ottimizzare la sua fruizione in base al canale di distribuzione finale. Ad esempio un'immagine, una volta caricata, viene copiata e ridimensionata con le varie risoluzioni che si usano maggiormanete nella piattaforma.\\
+A seconda della banda disponibile il sistema controlla che la qualità dell'erogazione dei contenuti sia ottimale ove questo sia possibile. Ad esempio, durante la riproduzione di un video, il sistema controlla la velocità con la quale il client riceve il video e automaticamente aumenta o riduce la qualità. Naturalmente può essere impostata manualmente.\\
+Un esempio si può vedere in \hyperref[content-history]{Figura 1.4}
+\begin{figure}[H]
 	\centering
 	\label{content-history}
 	\includegraphics[width=1.0\textwidth]{images/content-history.jpg}
 	\caption{History di un contenuto THRON}
 \end{figure}
-\\ \\Ogni file viene convertito in diversi formati e dimensioni in modo da ottimizzare la sua fruizione in base al canale di distribuzione finale. Ad esempio un'immagine, una volta caricata, viene copiata e ridimensionata con le varie risoluzioni che si usano maggiormanete nella piattaforma.\\
 
-A seconda della banda disponibile il sistema controlla che la qualità dell'erogazione dei contenuti sia ottimale ove questo sia possibile. Ad esempio, durante la riproduzione di un video, il sistema controlla la velocità con la quale il client riceve il video e automaticamente aumenta o riduce la qualità. Naturalmente può essere impostata manualmente.\\ \\
 
-Il prodotto viene infine fornito a siti o servizi esterni da dei connettori, in modo da interfacciarsi e integrarsi senza modifiche alla piattaforma. Per esempio è possibile installare dei connettori per i social network più famosi o per \gloss{CMS} come \textit{WordPress} all'interno di THRON. Questo permette di gestire contemporaneamente un contenuto ovunque esso sia usato. Ad esempio se viene caricata una nuova versione del file questo viene automaticamente modificato ovunque sia stato condiviso. Queste opzioni sono gestite nella sezione Shareboard in THRON come vediamo in \hyperref[content-shareboard]{Figura 1.6}.\\ 
+Il prodotto viene infine fornito a siti o servizi esterni da dei connettori, in modo da interfacciarsi e integrarsi senza modifiche alla piattaforma. Per esempio è possibile installare dei connettori per i social network più famosi o per \gloss{CMS} come \textit{WordPress} all'interno di THRON. Questo permette di gestire contemporaneamente un contenuto ovunque esso sia usato. Ad esempio se viene caricata una nuova versione del file questo viene automaticamente modificato ovunque sia stato condiviso. Queste opzioni sono gestite nella sezione Shareboard in THRON come vediamo in \hyperref[content-shareboard]{Figura 1.5}.\\ 
 \begin{figure}[H]
 	\centering
 	\label{content-shareboard}
@@ -284,7 +285,7 @@ Il prodotto viene infine fornito a siti o servizi esterni da dei connettori, in 
 	\caption{Shareboard in un contenuto THRON}
 \end{figure}
 
-Tutti questi contenuti sono raggruppati in un'unica piattaforma che analizza il contenuto e lo arricchisce di informazioni automaticamente con \gloss{tag} e \gloss{metadati}. Questo lavoro è svolto da un motore semantico e analitico che aggiunge queste informazioni sia appena caricato il contenuto sia durante il ciclo di vita di esso. Naturalmente è possibile aggiungere, modificare o eliminare queste informazioni manualmente. Queste, oltre ad arricchire i contenuti di informazioni utili, aiutano anche la loro organizzazione e gestione, soprattutto quando la mole di dati inizia ad essere notevole, poichè si possono ordinare o raggruppare contenuti per tag. Si può vedere la gestione delle tag in \hyperref[content-tags]{Figura 1.7}.
+Tutti questi contenuti sono raggruppati in un'unica piattaforma che analizza il contenuto e lo arricchisce di informazioni automaticamente con \gloss{tag} e \gloss{metadati}. Questo lavoro è svolto da un motore semantico e analitico che aggiunge queste informazioni sia appena caricato il contenuto sia durante il ciclo di vita di esso. Naturalmente è possibile aggiungere, modificare o eliminare queste informazioni manualmente. Queste, oltre ad arricchire i contenuti di informazioni utili, aiutano anche la loro organizzazione e gestione, soprattutto quando la mole di dati inizia ad essere notevole, poichè si possono ordinare o raggruppare contenuti per tag. Si può vedere la gestione delle tag in \hyperref[content-tags]{Figura 1.6}.
 \begin{figure}[H]
 	\centering
 	\label{content-tags}
@@ -294,10 +295,10 @@ Tutti questi contenuti sono raggruppati in un'unica piattaforma che analizza il 
 
 \chapter{La proposta di stage}
 \section{Introduzione}
-Come già detto in precedenza THRON è una piattaforma che mira a facilitare tutta la gestione dei contenuti. Un punto molto importante per THRON è il poter dare informazioni sui contenuti ai propri clienti per poter migliorare le tecniche di business e di marketing.\\
+Come già detto in precedenza THRON è una piattaforma che mira a facilitare tutta la gestione dei contenuti. Uno dei fattori che differenzia i normali DAM da THRON (che si proclama un DAM di nuova generazione) è la capacità di poter dare informazioni sui contenuti ai propri clienti per poter migliorare le tecniche di business e di marketing.\\
 Questo non è fatto soltanto aggiungendo tag e metadati ai contenuti ma anche tracciando molteplici informazioni riguardanti la fruizione e le visite sui contenuti stessi sui vari canali di distribuzione con l'uso di una libreria \textit{JavaScript} proprietaria.\\
 Le informazioni raccolte vengono poi mostrate sotto forma di grafici di semplice lettura al cliente in apposite sezioni. Un esempio si può vedere in \hyperref[reports-example]{Figura 2.1}.\\
-\begin{figure}[h] %TODO controllare ad ogni build dove va
+\begin{figure}[h]
 	\centering
 	\label{reports-example}
 	\includegraphics[width=1.0\textwidth]{images/reports-example.jpg}
@@ -307,7 +308,7 @@ Le informazioni raccolte vengono poi mostrate sotto forma di grafici di semplice
 Queste informazioni vengono raccolte attraverso una libreria scritta in \textit{JavaScript}. Prima dello stage prevedeva la possibilità di tracciare diversi eventi per i video e un solo evento per tutti i tipi di contenuto chiamato \textbf{load}. L'evento poteva essere usato con diversi scopi ma nella quasi totalità delle volte era usato per tracciare gli accessi e le visualizzazioni a tutti i contenuti erogati da THRON.\\
 Questo era possibile importando nelle pagine web la libreria dei tracciamenti e aggiungendo qualche riga di codice per inviare le informazioni necessarie. Il tutto era reso automatico nel caso di importazione del player di THRON che al suo interno contiene una libreria dei tracciamenti.\\
 
-Tra i vari moduli e \gloss{widget} che THRON offre ai suoi clienti troviamo il Predictive Content Reccomendation (PCR). Questo è un motore raccomandativo in grado di suggerire, in tempo reale, contenuti in base al profilo degli interessi della singola persona e allo storico delle sue precedenti navigazioni. Grazie alla capacità di THRON di capire gli interessi dell'utente, l'azione del PCR è diversa da quella dei tradizionali sistemi raccomandativi che basano i loro suggerimenti su "cosa hanno fatto o visto utenti simili". THRON invece permette una comunicazione personalizzata in linea con gli specifici interessi del singolo utente. L'aspetto rivoluzionario del PCR è che, a partire dalla sua capacità di aggregare contenuti da qualsiasi canale, permette di personalizzare la comunicazione su qualsiasi touch point (dal sito web all'app mobile, dall'e-commerce ai social network), aumentando in modo esponenziale il coinvolgimento dell'utente. Il PCR permette di filtrare inoltre contenuti "già visti o fruiti" dalla raccomandazione, supporta il multi-lingua ed estende la sua azione su qualsiasi canale digitale.
+Tra i vari moduli e \gloss{widget} che THRON offre ai suoi clienti troviamo il Predictive Content Recommendation (PCR). Questo è un motore raccomandativo in grado di suggerire, in tempo reale, contenuti in base al profilo degli interessi della singola persona e allo storico delle sue precedenti navigazioni. Grazie alla capacità di THRON di capire gli interessi dell'utente, l'azione del PCR è diversa da quella dei tradizionali sistemi raccomandativi che basano i loro suggerimenti su "cosa hanno fatto o visto utenti simili". THRON invece permette una comunicazione personalizzata in linea con gli specifici interessi del singolo utente. L'aspetto rivoluzionario del PCR è che, a partire dalla sua capacità di aggregare contenuti da qualsiasi canale, permette di personalizzare la comunicazione su qualsiasi touch point (dal sito web all'app mobile, dall'e-commerce ai social network), aumentando in modo esponenziale il coinvolgimento dell'utente. Il PCR permette di filtrare inoltre contenuti "già visti o fruiti" dalla raccomandazione, supporta il multi-lingua ed estende la sua azione su qualsiasi canale digitale.
 
 \newpage{}
 \section{Obiettivi aziendali}
@@ -341,7 +342,7 @@ Gli obiettivi sono stati poi elaborati e definiti totalmente durante la fase di 
 Per lo stage, l'Università di Padova ha imposto dei vincoli per la durata, che deve essere compresa tra le 300 e le 320 ore. Per questo motivo, prima dell'inizio dello stage, è stato redatto insieme all'azienda un piano di lavoro che comprende 320 ore, contando anche una chiusura aziendale estiva.
 
 \section{Aspettative}
-L'azienda aveva un forte interesse per questo progetto, perché è frutto di diverse richieste da parte dei clienti.\\
+L'azienda aveva un forte interesse per questo progetto, perché frutto di diverse richieste da parte dei clienti.\\
 Nello specifico i clienti hanno avanzato richieste per avere informazioni riguardanti quanto le raccomandazioni fossero effettivamente efficaci, l'analisi di questo problema è descritta in \hyperref[analisi-pcr]{questa sezione} in quanto non è un concetto banale.\\
 Inoltre questo progetto poteva aprire nuove evoluzioni specifiche per il motore di raccomandazione ed evoluzioni riguardanti questo stesso progetto di stage.
 
@@ -350,7 +351,7 @@ Il mio obiettivo più grande era affrontare uno stage che mi permettesse sia di 
 
 A StageIT THRON mi ha fatto subito una buona impressione, proponendomi questo progetto in maniera chiara e facendomi capire che mi avrebbero fatto collaborare con più team coinvolgendomi in tutte le attività legate al progetto, analisi compresa, così da darmi l'opportunità di ottenere una buona visione del mondo lavorativo.\\
 Inoltre il progetto, nel caso di risultati positivi, sarebbe stato utilizzato come passo evolutivo mettendo la nuova versione in produzione per i clienti.\\
-Questo sommato alle tecnologie di mio interesse mi ha spinto a scegliere questo progetto.
+Tutti questi motivi mi hanno spinto a scegliere questo stage.
 
 \chapter{Lo stage}
 
@@ -383,7 +384,7 @@ Con il tutor aziendale era stato redatto un piano di lavoro di 320 ore suddiviso
 La fase di analisi è stata molto importante e più lunga del previsto.\\
 Uno dei motivi che mi hanno spinto a scegliere questo progetto di stage era il fatto che copriva diversi ambiti, non focalizzandosi soltanto, ad esempio, in uno sviluppo backend o frontend. Questo ha significato dover interagire con diversi team aziendali effettuando molti brainstorming con componenti di vari team per collegare tutti i pezzi.\\
 
-Per effettuare la dashboard e presentare i dati in maniera elegante ed intuitiva ho collaborato col team di Design e UX per lo sviluppo delle grafiche e l'integrazione in \gloss{Bacheca}.\\Per la raccolta e modellazione  dei dati relativi al tracciamento delle singole raccomandazioni di contenuti ho lavorato col team di Intelligence mentre per la raccolta e modellazione dei dati relativi alla quantità di raccomandazioni effettuate dalle varie applicazioni ho lavorato col team Core.\\
+%Per effettuare la dashboard e presentare i dati in maniera elegante ed intuitiva ho collaborato col team di Design e UX per lo sviluppo delle grafiche e l'integrazione in \gloss{Bacheca}.\\Per la raccolta e modellazione  dei dati relativi al tracciamento delle singole raccomandazioni di contenuti ho lavorato col team di Intelligence mentre per la raccolta e modellazione dei dati relativi alla quantità di raccomandazioni effettuate dalle varie applicazioni ho lavorato col team Core.\\
 Ho potuto suddividere quindi tutte le attività in tre fasi:
 \begin{itemize}
 \item \textbf{fase 1:} collaborazione col team di Intelligence per la raccolta e modellazione dati utili alla creazione dei grafici qualitativi, ovvero quelli per soddisfare le richieste dei clienti relative alla bontà delle raccomandazioni;
@@ -497,13 +498,13 @@ Tutti i seguenti obiettivi devono essere implementati all'interno di una dashboa
 Da qualche tempo è però utilizzato in molti altri ambiti come la programmazione di applicazioni mobile tramite frameworks come \textit{Ionic} o \textit{Appcelerator}.\\
 
 Essendo THRON una piattaforma web, \textit{JavaScript} è un linguaggio pressoché obbligatorio da imparare per lavorare in azienda.\\
-Nel mio stage l'ho utilizzato largamente per apportare le modifiche alla libreria dei tracciamenti\\ 
+Nel mio stage l'ho utilizzato largamente per apportare le modifiche alla libreria dei tracciamenti.\\ 
 In più l'ho utilizzato anche per aggiungere il tracciamento automatico nei widget di raccomandazione, essendo anche quest'ultimi scritti in \textit{JavaScript}.\\
-Inoltre ho utilizzato \textit{JavaScript} anche per l'esposizione dei dati, ovvero per la creazione della console in cui sono esposti dei grafici come spiegato nei capitoli a seguire.\\ \\
+Anche per l'esposizione dei dati, ovvero per la creazione della console in cui sono esposti i grafici come spiegato nei capitoli a seguire.\\ \\
 
 \subsection{Snowplow}
 \label{snowplow}
-\textit{Snowplow} è un complesso sistema basato su \gloss{pipelines} per effettuare il tracciamento di eventi, per la raccolta di quest'ultimi e per la loro elaborazione.\\
+\textit{Snowplow} è un complesso sistema basato su \gloss{pipeline} per effettuare il tracciamento di eventi, per la raccolta di quest'ultimi e per la loro elaborazione.\\
 Fornisce librerie scritte in molti linguaggi di programmazione da inserire nel proprio applicativo per effettuare tracciamenti personalizzati. Nel mio caso ho usato quella scritta in \textit{JavaScript}.\\
 Due sono i punti forti di \textit{Snowplow}: 
 \begin{enumerate}
@@ -517,9 +518,9 @@ Questi aspetti lo rendono molto diverso da altri concorrenti come \textit{Google
 	\includegraphics[width=1.0\textwidth]{images/snowplow-workflow.png}
 	\caption{Workflow di Snowplow}
 \end{figure} 
-I trackers rappresentano le librerie da aggiungere nei client, queste attraverso delle chiamate HTTP a dei webhook inviano i dati in un collector. Questo è uno Scala Stream Collector, ovvero un software Scala che riceve gli eventi grezzi di \textit{Snowplow} attraverso chiamate HTTP, le serializza e scrive i dati in Amazon S3. L'enricher è un software che carica i dati da S3 e li arricchisce con ulteriori informazioni.\\
+I trackers rappresentano le librerie da aggiungere nei client, queste attraverso delle chiamate HTTP a dei webhook inviano i dati in un collector. Questo è uno Scala Stream Collector, ovvero un software Scala che riceve gli eventi grezzi di \textit{Snowplow} attraverso chiamate HTTP, le serializza e scrive i dati in qualche database. L'enricher è un software che carica i dati dal database e li arricchisce con ulteriori informazioni.\\
 \textit{Snowplow} fornisce una versione software di base per ogni blocco, tuttavia sono necessari cambiamenti o diverse implementazioni per necessità personalizzate come nel caso THRON.\\
-Per rendere possibile il tracciamento di dati eterogenei e personalizzabili \textit{Snowplow} adotta un sistema di schemi. L'idea è creare degli schemi in cui si descrive come può essere un evento tracciato lato client, in questo modo il server che riceve questi eventi può validarli usando questi schemi.\\ 
+Per rendere possibile il tracciamento di dati eterogenei e personalizzabili \textit{Snowplow} adotta un sistema di schemi. L'idea è creare degli schemi in cui si descrive come può essere la struttura di un evento tracciato lato client, in questo modo il server che riceve gli eventi ha modo di validarli.\\ 
 
 \subsection{HTML e CSS}
 Naturalmente per la creazione dei grafici e l'integrazione in \gloss{Bacheca} ho utilizzato anche questi linguaggi.\\Ho creato anche diverse pagine di demo e di test per il \gloss{parser} creato per effettuare i tracciamenti in automatico.\\
@@ -529,6 +530,8 @@ Naturalmente per la creazione dei grafici e l'integrazione in \gloss{Bacheca} ho
 Il codice \textit{Scala} viene compilato in bytecode \textit{Java} così l'esecuzione avviene sulla \textit{Java Virtual Machine}.\\
 In questo modo si possono utilizzare libreria \textit{Java} all'interno di \textit{Scala} rendendolo un ambiente molto vasto e pieno di librerie già pronte da riutilizzare.\\
 Una peculiarità di Scala è data dal fatto che, come dice il nome stesso, è orientato alla scalabilità orizzontale, questo lo rende un linguaggio di programmazione in forte ascesa negli ultimi anni, soprattutto per aziende che trattano BigData o una certa elasticità di richieste per i loro servizi.\\
+
+L'ho utilizzato per tutta la parte di elaborazione dati server side. Sia per le informazioni necessarie per la creazione dei grafici qualitativi sia per quelli quantitativi.\\
 
 \subsection{Apache Spark}
 \textit{Spark} è un framework per l'elaborazione dati su cluster. Supporta diversi linguaggi di programmazione quali \textit{Java}, \textit{Scala} e \textit{Python} e nel mio caso ho utilizzato \textit{Scala}.\\
@@ -544,7 +547,7 @@ Nel progetto è stato utilizzato per il salvataggio dei dati relativi al numero 
 
 \subsection{Amazon SNS}
 Amazon SNS è un servizio di notifiche push. Permette di inviare messaggi individuali o collettivi ad un numero elevato di destinatari. I destinatari possono essere dispositivi mobili, destinatari di posta o anche altri servizi distribuiti.\\
-Il workflow di SNS è come descritto in \hyperref[sns-workflow]{Figura 3.2}. Il publisher può essere una persona o un programma che scatena un evento, l'SNS topic è una coda a cui software può effettuare sottoscrizione per essere notificati qual'ora ci sia un evento.
+Il workflow di SNS è come descritto in \hyperref[sns-workflow]{Figura 3.2}. Il publisher può essere una persona o un programma che scatena un evento, l'SNS topic è una coda a cui si può effettuare sottoscrizione per essere notificati qual'ora ci sia un evento.
 \begin{figure}[H]
 	\centering
 	\label{sns-workflow}
@@ -554,7 +557,7 @@ Il workflow di SNS è come descritto in \hyperref[sns-workflow]{Figura 3.2}. Il 
 Utilizzato per creare dei servizi lato server che seguano uno scheduling costante.\\
 
 \subsection{Elasticsearch}
-\textit{Elasticsearch} è un motore di ricerca basato su \gloss{Lucene}. Consiste in un motore di ricerca distribuito interrogabile tramite richieste HTTP. All'interno i dati vengono salvati sotto forma di documenti JSON. Le prestazioni sono così elevate da essere considerato real-time, per questo ha ottenuto sempre maggiore successo e al momento è utilizzato nella maggior parte dei progetti in cui si deve interrogare grandissime quantità di dati distribuibili.\\
+\textit{Elasticsearch} è un motore di ricerca basato su \gloss{Lucene} distribuito interrogabile tramite richieste HTTP. All'interno i dati vengono salvati sotto forma di documenti JSON. Le prestazioni sono così elevate da essere considerato real-time, per questo ha ottenuto sempre maggiore successo e al momento è utilizzato nella maggior parte dei progetti in cui si deve interrogare grandissime quantità di dati distribuibili.\\
 Nel progetto mi sono interfacciato con diverse istanze di \textit{Elasticsearch} poichè l'azienda ne fa largo uso, in particolare il team di Intelligence che ha a che fare con BigData.
 
 \newpage{}
@@ -564,7 +567,7 @@ Nel progetto mi sono interfacciato con diverse istanze di \textit{Elasticsearch}
 
 \subsubsection{Analisi tracciamenti}
 \label{analisi-pcr}
-Per prima cosa si è scelto di analizzare come raccogliere i dati necessari per poter capire e fornire al cliente delle metriche e valutazioni di efficienza dello strumento PCR. Infatti i clienti tra le richieste volevano sapere quanto efficace il PCR fosse, questo però è un concetto non basilare e non definito dai clienti stessi perciò molto tempo dell'analisi è stato impiegato a pensare come valutare questo.\\
+Per prima cosa si è scelto di analizzare come raccogliere i dati necessari per poter capire e fornire al cliente delle metriche e valutazioni di efficienza dello strumento PCR. Questo però è un concetto non basilare e non definito dai clienti stessi perciò molto tempo dell'analisi è stato impiegato a pensare come valutare questo.\\
 
 Ho collaborato con il team di Intelligence e con uno \gloss{data scientist} per cercare di definire questo concetto. Sono state vagliate diverse proposte interne e fatte diverse ricerche in internet, alla fine si è scelto l'approccio che conciliasse una buona precisione sull'efficacia dello strumento dovendo però rientrare in tempi non molto lunghi per i vincoli di stage.\\
 La definizione risultate è la seguente:\\
@@ -587,10 +590,10 @@ Tramite questi eventi l'azienda è in grado di fornire al cliente varie informaz
 \item I contenuti più cliccati.
 \end{itemize}
 
-Mentre è facile capire che i contenuti più proposti siano i contenuti caricati più volte dai widget di raccomandazione (ovvero contenuti caricati nel widget nella pagina web), è importante capire la differenza tra visto e cliccato. Per contenuto visto (impression) si intende un contenuto proposto dal PCR e che è entrato nella \gloss{viewport} dell'utente finale (ma che non necessariamente l'utente ci ha interagito). Per contenuto cliccato si intende un contenuto visto dall'utente in più su cui quest'ultimo ha fatto un click per 
+Mentre è facile capire che i contenuti più proposti siano i contenuti caricati più volte dai widget di raccomandazione (ovvero contenuti caricati nel widget nella pagina web), è importante capire la differenza tra visto e cliccato. Per contenuto visto (impression) si intende un contenuto proposto dal PCR e entrato nella \gloss{viewport} dell'utente finale (ma che non necessariamente l'utente ci ha interagito). Per contenuto cliccato si intende un contenuto visto dall'utente in più su cui quest'ultimo ha fatto un click per 
 aprirlo o per interagirci.\\
 
-Infatti i widget di raccomandazione contengono una lista di contenuti con una \gloss{thumbnail} e una breve descrizione, al click su un contenuto si è portati nella pagina del contenuto o in un altra pagina web a seconda di come è impostato il widget. Un esempio di un widget raccomandativo lo possiamo vedere in \hyperref[pcr-example]{Figura 3.3}
+Infatti i widget di raccomandazione contengono una lista di contenuti con una \gloss{thumbnail} e una breve descrizione, al click su una di queste immagini si è portati nella pagina del contenuto o in un altra pagina web a seconda di come è impostato il widget. Un esempio di un widget raccomandativo lo possiamo vedere in \hyperref[pcr-example]{Figura 3.3}
 \begin{figure}[H]
 	\centering
 	\label{pcr-example}
@@ -600,7 +603,7 @@ Infatti i widget di raccomandazione contengono una lista di contenuti con una \g
 
 Durante l'analisi si è capito che l'azione di caricare il contenuto dal widget (evento load) non portava necessariamente informazioni molto utili riguardanti le raccomandazioni, poiché se un contenuto non è neanche entrato nella viewport dell'utente si può semplicemente ignorare. Abbiamo così deciso di tracciare questo evento per avere questa informazione che può essere utile in futuro, ma per ora ci concentreremo più sugli altri due eventi.\\
 
-Abbiamo infatti, dopo brainstorming e ricerche in internet, trovato una metrica che dasse un indicazione soddisfacente dell'efficacia di un contenuto, questa metrica si chiama \textbf{click through rate}. In pratica è un valore calcolato dal rapporto delle interazioni con il contenuto con il numero di viste (click diviso impression). Questo indice può assumere valori compresi tra zero e uno, in particolare un valore vicino all'unità sta ad indicare che il contenuto ha subito molte interazioni rispetto alle visite ricevute. Questo fatto indicherebbe che il contenuto raccomandato è interessante per quasi tutti gli utenti a cui è stato proposto indicando un ottimo lavoro da parte del motore di raccomandazione. Valori invece molto bassi di questo indice significherebbero che il contenuto è stato aperto poche volte rispetto al numero di visite, suggerendoci che il contenuto ha provocato scarso interesse da parte degli utenti a cui è stato proposto.\\
+Abbiamo infatti, dopo brainstorming e ricerche in internet, trovato una metrica che dasse un indicazione soddisfacente dell'efficacia di una raccomandazione, questa metrica si chiama \textbf{click through rate}. In pratica è un valore calcolato dal rapporto delle interazioni con il contenuto con il numero di viste (click diviso impression). Questo indice può assumere valori compresi tra zero e uno, in particolare un valore vicino all'unità sta ad indicare che il contenuto ha subito molte interazioni rispetto alle visite ricevute. Questo fatto significherebbe che il contenuto raccomandato è interessante per quasi tutti gli utenti a cui è stato proposto indicando un ottimo lavoro da parte del motore di raccomandazione. Valori invece molto bassi significherebbero che il contenuto è stato aperto poche volte rispetto al numero di visite, suggerendoci che il contenuto ha provocato scarso interesse da parte degli utenti a cui è stato proposto.\\
 Si è deciso quindi che questo fosse uno dei valori, per ogni contenuto, da presentare al cliente.\\
 Abbiamo anche deciso di eliminare casi particolari come gli elementi con un numero di visite al di sotto di una certa soglia. Questo perché uno scarso numero di visite e pochi click avrebbe comunque un click through rate più alto di contenuti magari più significativi. Per esempio un contenuto con 3 click e 4 impression avrebbe un click through rate di 0.75, indice molto alto, mentre un contenuto con 1000 impression e 500 click avrebbe un click through rate di 0.5, il che porterebbe a pensare che il contenuto sia molto meno interessante ma è probabile che in realtà sia il contrario perché con numeri molto bassi è facile avere un rapporto alto e non veritiero.\\
 
@@ -609,7 +612,7 @@ Tutte queste considerazioni valgono non solo per contenuti caricati dai widgets 
 \subsubsection{Progettazione e sviluppo prima fase}
 
 \paragraph{Raccolta degli eventi - libreria dei tracciamenti}\mbox{} \\
-Per raccogliere le informazioni necessarie THRON usa una libreria \textit{JavaScript} che espone dei metodi per tracciare eventi. Questa libreria deve essere inclusa nelle pagine web o applicazioni e aggiunta in pagina la logica per tracciare queste informazioni. Un esempio banale: se si volesse acquisire l'informazione di quante volte viene aperta la scheda di un contenuto in un sito di e-commerce basterebbe lanciare un evento load al caricamento della pagina relativa dell'oggetto da vendere sul contenuto di tipo immagine relativo all'oggetto.\\
+Per raccogliere le informazioni necessarie THRON usa una libreria \textit{JavaScript} che espone dei metodi per tracciare eventi. Questa libreria deve essere inclusa nelle pagine web o applicazioni e aggiunta in pagina la logica per tracciare queste informazioni. Un esempio banale: se si volesse acquisire l'informazione di quante volte viene aperta la scheda di un contenuto in un sito di e-commerce basterebbe lanciare un evento load al caricamento della pagina relativa dell'oggetto da vendere sul contenuto relativo all'oggetto.\\
 
 La libreria dei tracciamenti THRON supportava diversi eventi da loro già tracciati, tuttavia non disponeva di metodi per tracciare impression e click perciò era necessario aggiungere queste funzionalità.\\
 Per fare questo ho dovuto studiare come era implementata la libreria e familiarizzare con diverse tecnologie mai utilizzate da me prima tra cui:
@@ -629,7 +632,7 @@ Il problema è molto ampio e non banale, tuttavia questo stage rappresentava un 
 I widget raccomandativi, come visto \hyperref[pcr-example]{in precedenza}, aggiungono in pagina una lista di immagini con descrizione. Queste immagini, chiamate \gloss{thumbnail}, rappresentano effettivamente il contenuto stesso quindi si è scelto di partire con un software che tracciasse in automatico eventi sulle immagini, lasciandolo aperto a future estensioni per tutti gli altri tipi di contenuto che, spesso, useranno le stesse logiche applicate per le immagini.\\
 Ho pensato quindi di creare un modulo all'interno della libreria dei tracciamenti che usasse le funzionalità esposte dalla libreria stessa.\\
 
-L'idea che ho avuto è stata creare un \gloss{parser}, ovvero un oggetto che, al caricamento della pagina, o tramite invocazione \textit{JavaScript}, analizzasse la pagina web e cercasse tutti gli elementi possibili da tracciare.\\
+L'idea che ho avuto è stata di creare un \gloss{parser}, ovvero un oggetto che, al caricamento della pagina, o tramite invocazione \textit{JavaScript}, analizzi la pagina web e cerchi tutti gli elementi possibili da tracciare.\\
 Due problemi erano presenti: come far capire al parser quali erano gli elementi tracciabili e come recuperare le informazioni per il tracciamento, infatti la libreria dei tracciamenti espone un oggetto chiamato \textit{tracker} su cui invocare gli eventi da tracciare. Quest'ultimo necessità di informazioni come l'identificativo del contenuto, il \gloss{codice servizio}, il tipo del contenuto e altro ancora.\\
 Il mio tutor mi ha lasciato libera scelta per il primo problema e mi ha indirizzato invece su una facile soluzione per il secondo.\\
 Mi ha mostrato che le \gloss{thumbnail} usate per rappresentare i contenti nelle pagine web avevano un url costruito secondo un pattern ben definito, ovvero:\\ \\
@@ -642,7 +645,7 @@ Rimaneva da trovare una soluzione per far capire al parser quali elementi in pag
 Ho scelto di risolvere entrambi questi problemi attraverso l'uso di classi \textit{CSS}. L'idea è quella di aggiungere una classe, personalizzabile, per far capire al parser quali elementi devono essere analizzati e quali azioni tracciare in automatico su di essi.\\
 Ho analizzato il problema col tutor e ha accettato la mia idea per la semplicità e perché non rendeva necessaria nessuna modifica a servizi come quello che genera le \gloss{thumbnail} che avrebbe causato ritardi nella realizzazione.\\
 
-Ho così iniziato a sviluppare questo modulo nella libreria, mantenendo una struttura ad oggetti per lasciare aperte future estensioni per il supporto di nuovi tipi di contenuti o di nuovi eventi. Su suggerimento del tutor ho aggiunto dei controlli per filtrare eventi non possibili su alcuni tipi di contenuto, come tracciare eventi \gloss{seek} su immagini e per limitare gli errori possibili di battitura sulle classi.\\
+Ho così iniziato a sviluppare questo modulo nella libreria, mantenendo una struttura ad oggetti per lasciare aperte future estensioni per il supporto di nuovi tipi di contenuti e di nuovi eventi. Su suggerimento del tutor ho aggiunto dei controlli per filtrare eventi non possibili su alcuni tipi di contenuto, come tracciare eventi \gloss{seek} su immagini e per limitare gli errori possibili di battitura sulle classi.\\
 L'idea che avevo avuto inizialmente era di sviluppare questo parser utilizzando tutte le funzionalità esposte dal framework \textit{jQuery}, questo infatti mi avrebbe aiutato molto per la ricerca degli elementi, per il filtraggio e per avere un supporto multi browser assicurato. Tuttavia mi è stata sconsigliata perché è una libreria molto grande e avrebbe appesantito l'intera libreria. Ho così sviluppato tutto il modulo in puro \textit{JavaScript} senza l'ausilio di altri framework eccetto quelli che già erano nella libreria. A lavoro finito devo dire che il tutor aveva pienamente ragione poiché senza l'uso di jQuery la libreria occupa circa \textbf{100KB} mentre con l'uso di \textit{jQuery} circa \textbf{180KB}.\\
 
 Il supporto ad alcuni browser, in particolare \textit{Internet Explorer} 9, mi ha dato qualche problema che ho dovuto risolvere con dei fallback o aggiungendo dei piccoli \gloss{polyfill} che potranno essere utili anche in futuro.\\
@@ -672,10 +675,10 @@ Per aggiungere il tracciamento automatico nei widgets di raccomandazione mi è b
 L'analisi e la progettazione di queste attività sono state più lunghe del previsto, si è deciso quindi di cercare di risparmiare tempo nelle prossime attività qual'ora ci fosse l'opportunità, altrimenti di tralasciare qualcuno degli obiettivi non obbligatori come lo strumento di personalizzazione dei widget.
 
 \paragraph{Elaborazione dei dati raccolti - Spark}\mbox{} \\
-Come già detto \hyperref[snowplow]{parlando di Snowplow} prevede che i dati vengano raccolti nel collector, qui si troveranno tutti i dati dei tracciamenti grezzi, così come sono inviati dai client. Per renderli presentabili all'utente finale hanno bisogno di alcune elaborazioni che sono fatte da degli enricher.\\
+Come già detto, Snowplow prevede che i dati vengano raccolti nel collector, qui si troveranno tutti i dati dei tracciamenti grezzi, così come sono inviati dai client. Per renderli presentabili all'utente finale hanno bisogno di alcune elaborazioni che sono fatte da degli enricher.\\
 THRON ne ha sviluppato diversi per i propri bisogni, quattro in particolare:
 \begin{itemize}
-	\item Un enricher comune che prende i dati dal collector e va ad aggiungere tutte quelle informazioni che sono necessarie per tutti i dati, indipendentemente da dove essi debbano essere presentati. Questo infatti aggiunge informazioni relativi a chi ha scatenato gli eventi. Questo modulo infatti associa all'identificativo utente tracciato, un identificativo utente THRON tramite il merge con i dati di un database apposito. Questo processo fa si che si identifichi univocamente l'utente che ha effettuato una certa azione;
+	\item Un enricher comune prende i dati dal collector e va ad aggiungere tutte quelle informazioni che sono necessarie per tutti i dati, indipendentemente da dove essi debbano essere presentati; questo infatti aggiunge dati relativi a chi ha scatenato gli eventi. Infatti associa, all'identificativo utente tracciato, un identificativo utente THRON tramite il merge con un database apposito. Questo processo fa in modo che si identifichi univocamente l'utente che ha effettuato una certa azione;
 	\item Un enricher per il recommendation che legge i dati in uscita del primo enricher e li elabora secondo algoritmi scritti da THRON per produrre in output dei json che servono per la raccomandazione di contenuti;
 	\item Un enricher per il behaviour che serve ad analizzare le tag dei contenuti più frequentemente accedute da parte degli utenti per associarle ad essi;
 	\item Un enricher per i reports che legge i dati arricchiti con le informazioni dei contatti e va ad aggiungere una serie di informazioni atte proprio a generare dei dati appositi per la presentazione dei dati ai clienti .
@@ -691,21 +694,21 @@ Lavorando a stretto contatto col team di Intelligence ho apportato delle modific
 Per il recommendation e il behaviour ho apportato piccolissime modifiche solo per far si che questi software filtrino i nuovi eventi. Questo è infatti necessario al momento perché gli algoritmi di raccomandazione e per l'analisi del comportamento utenti si basano su algoritmi di machine learning delicati e per introdurre i nuovi eventi c'è bisogno di un analisi molto approfondita. Questo era quindi impossibile con i vincoli temporali dello stage e potrebbe essere un progetto di stage futuro.\\
 Nell'enricher dei reports, che è quello che produrrà i dati da interrogare per la creazione dei grafici qualitativi, abbiamo aggiunto il supporto ai nuovi eventi e alle nuove informazioni. Inoltre per rendere più ordinato l'output dei dati abbiamo scelto di scrivere i dati in output su diversi indici di \textit{Elasticsearch} raggruppati per tipo di evento. Questo può infatti migliorare leggermente le performance delle query se si conosce in partenza il tipo di eventi da cercare.\\
 
-Ci sono stati dei problemi per l'aggiunta di nuove informazioni per la serializzazione di questi ma grazie all'aiuto del team sono riuscito a finire le attività con un piccolo anticipo rispetto ai tempi prefissati.\\
+Ci sono stati dei problemi per l'aggiunta di nuove informazioni per la serializzazione di queste, ma grazie all'aiuto del team sono riuscito a finire le attività con un piccolo anticipo rispetto ai tempi prefissati.\\
 I web services necessari a interrogare l'\textit{Elasticsearch} contenente i dati dei reports erano già presenti, è stato necessario effettuare delle modifiche su quest'ultimi per fari si che rendessero disponibili anche i nuovi dati elaborati ma queste modifiche sono state effettuate dal resto del team guadagnando così del tempo.\\
 
 \subsection{Seconda Fase}
 
 \subsubsection{Analisi raccolta del numero di raccomandazioni}
-Ho partecipato a delle riunioni col team Core per capire come rendere disponibili ai clienti i dati relativi alla quantità di raccomandazioni fatte dalle loro applicazioni. Questo è molto importante poiché i clienti al momento dell'acquisto dello strumento di raccomandazioni possono scegliere diversi Business Model che prevedono una quantità di raccomandazioni oraria massima prefissata. Superata questa soglia lo strumento non raccomanda più secondo algoritmi intelligenti ma propone solo contenuti simili.\\
+Ho partecipato a delle riunioni col team Core per capire come rendere disponibili ai clienti i dati relativi alla quantità di raccomandazioni fatte dalle loro applicazioni. Questo è molto importante poiché i clienti al momento dell'acquisto dello strumento di raccomandazione possono scegliere diversi Business Model che prevedono una quantità di raccomandazioni oraria massima prefissata. Superata questa soglia lo strumento non raccomanda più secondo algoritmi intelligenti ma propone solo contenuti simili.\\
 
 THRON possiede un \textit{Elasticsearch} in cui vengono immagazzinati tutti gli accessi alle loro API. Tuttavia questi dati vengono salvati per un massimo di sessanta giorni poiché la mole di dati è non indifferente (si parla di almeno quattro gigabyte di log di accessi al giorno contando solo gli accessi alle API, senza contare quindi le fruizioni delle \gloss{cdn}).\\
-I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari andasse ad interrogare l'\textit{Elasticsearch} di monitoring, ricavasse tutte le informazioni riguardanti gli accessi alle raccomandazioni e le andasse a salvare in qualche altro database.\\
+I dati da fornire ai clienti devono avere una \gloss{retention} di almeno due anni, per questo motivo si è deciso di creare un qualche processo che ad intervalli regolari vada ad interrogare l'\textit{Elasticsearch} di monitoring, ricavi tutte le informazioni riguardanti gli accessi alle raccomandazioni e le salvi in qualche altro database.\\
 I grafici potranno avere una granularità oraria, giornaliera o mensile, ho pensato quindi di salvare di dati raggruppati per queste granularità per avere un risultato immediato quando si effettua una richiesta.\\
 L'\textit{Elasticsearch} di cui si parla è in una rete privata dell'azienda perché contiene dati che non devono essere resi pubblici, analogamente il database in cui si andranno a salvare i dati sarà nella stessa rete interna è quindi necessario anche creare uno strato di web services che rendano disponibili i dati riguardanti la quantità di raccomandazioni all'esterno.\\
 
 Come ultima cosa abbiamo pensato anche di creare, nel caso di fosse tempo, un servizio che ripulisse i dati più vecchi di due anni con granularità maggiore di quella mensile. Questo perché è poco auspicabile che un utente voglia vedere le raccomandazioni relative ad un giorno preciso di più di due anni fa.\\
-La quantità di dati da salvare non è molto grande ma si parla comunque di una riga su un database per ogni ora per ogni applicazione raccomandativa, facendo dei calcoli si ottengono \textbf{8760} entry orarie per applicazione. Non è un numero molto grande ma bisogna pensare che le applicazioni raccomandative potrebbero crescere andando ad aumentare l'ordine di grandezza dei dati da salvare.\\
+La quantità di dati da salvare non è molto grande ma si parla comunque di una riga su un database per ogni ora per ogni applicazione raccomandativa, facendo dei calcoli si ottengono \textbf{8760} entry orarie per anno per applicazione. Non è un numero molto grande ma bisogna pensare che le applicazioni raccomandative potrebbero crescere andando ad aumentare l'ordine di grandezza dei dati da salvare.\\
 
 \subsubsection{Progettazione e sviluppo seconda fase}
 Per prima cosa mi è stato chiesto di pensare alle firme di tutti i servizi da creare. THRON mantiene tutta l'architettura software in un progetto di \gloss{Enterprise Architect} tramite diagrammi delle classi e altro ancora.\\
@@ -722,23 +725,23 @@ Si è scelto di usare un \textit{MongoDB} per il salvataggio dei dati per due mo
 Ho implementato, sempre anche grazie all'aiuto dell'azienda, i servizi per l'estrazione dei dati da \textit{Elasticsearch} e il salvataggio in \textit{MongoDB}.\\
 Per fare in modo che il servizio fosse eseguito ogni ora il team Core mi ha fornito l'accesso allo strumento di notifiche Amazon, Amazon SNS. Hanno implementato diverse code di sottoscrizione con intervalli orari diversi per ogni necessità. Sottoscrivendo un servizio ad una di queste code Amazon SNS provvede automaticamente a risvegliare, tramite una \gloss{notifica push}, i servizi sottoscritti.\\
 Ho dovuto quindi tramite configurazione sottoscrivere questo servizio alla coda oraria per far si che fosse schedulato in automatico.\\
-Il scritto il servizio in modo che:
+Ho scritto il servizio in modo che:
 \begin{itemize}
-	\item Per prima cosa legge dal database quando è stata l'ultima elaborazione dei dati;
+	\item Per prima cosa legge dal database quando è stata fatta l'ultima elaborazione dei dati;
 	\item Interroga \textit{Elasticsearch} chiedendo i dati relativi alle raccomandazioni dall'ultima elaborazione;
-	\item Crea un documento, nella collezione contenente i dati orari, con al suo interno il numero di raccomandazioni fatte per ogni applicazione raccomandativa;
+	\item Crea diversi documenti, nella collezione contenente i dati orari, con al suo interno il numero di raccomandazioni fatte per ogni applicazione raccomandativa;
 	\item Controlla se è passato più di un giorno dall'ultima elaborazione dei dati giornaliera;
 	\item Se si raccoglie, al suo interno, i dati relativi all'ultimo giorno e salva in una collezione adibita a contenere i dati giornalieri un documento con quest'ultimi;
 	\item Effettua lo stesso controllo e la stessa logica per i dati mensili;
 	\item Aggiorna tutti i timestamp relativi alle ultime elaborazioni fatte.
 \end{itemize}
 In questo modo nel database sono presenti diverse collezioni contenenti i dati con le granularità richieste, nè il client nè il server devono così effettuare calcoli quando i dati gli sono restituiti.\\
-Ho pensato di organizzare i dati in questo modo anche per facilitare la creazione del servizio di pulizia dei dati vecchi, se fossero tutti i dati in un unica collezione avrebbe dovuto ad ogni esecuzione filtrare quelli con granularità diverse da quella da cercare rendendolo più lento.\\
+Ho pensato di organizzare i dati in questo modo anche per facilitare la creazione del servizio di pulizia dei dati vecchi, se venissero salvati tutti i dati in un unica collezione si dovrebbe, ad ogni esecuzione, filtrare quelli con granularità diverse da quella da cercare rendendolo più lento.\\
 
 Ho poi implementato i web services necessari, è stato possibile riutilizzare tantissimo del codice già presente facilitandomi il compito, ho infatti utilizzato codice ed esteso alcuni dei web services relativi alla fruizione dei dati dei reports finendo così le attività in anticipo rispetto al previsto.\\
 Essendo in anticipo ho scritto il servizio per l'eliminazione dei dati più vecchi di due anni dal database, anche questo non ha creato problemi perché avevamo effettuato la progettazione pensando che la creazione di questo servizio era necessaria prima o poi. Sottoscritto il servizio alla coda mensile di SNS ho implementato facilmente il resto.\\
 
-Assieme al team Core abbiamo anche implementato un servizio di monitoring che analizzi, ad ogni esecuzione, la qualità del processo eseguito. In particolare nel caso il servizio fallisca lanciando un eccezione il servizio di monitoring avverte il team tramite una notifica su uno schermo che hanno in ufficio che è avvenuto un errore. Manda una notifica anche nel caso il servizio di metta più di una certa durata che abbiamo fissato a venti minuti.\\
+Il team Core ha anche implementato un servizio di monitoring che analizzi, ad ogni esecuzione, la qualità del processo eseguito. Nel caso il servizio fallisca lanciando un eccezione il servizio di monitoring avverte il team tramite una notifica su uno schermo che hanno in ufficio che è avvenuto un errore. Manda una notifica anche nel caso in cui il servizio ci metta più di una certa durata che abbiamo fissato a venti minuti.\\
 Grazie a questa console il team Core tiene monitorato tutta una serie di altri loro servizio per capire, prima di ricevere eventuali segnalazioni dei clienti, se qualcosa non sta funzionando o se ci sono rallentamenti che necessitano una analisi da parte loro.\\
 
 \subsection{Terza fase}
@@ -751,28 +754,30 @@ Per l'integrazione in \gloss{bacheca} mi sono state elencate le tecnologie da ad
 Abbiamo pensato di creare un grafico per la rappresentazione della quantità di raccomandazioni.\\
 In particolare il grafico presenterà in asse X il tempo, in base alla granularità scelta. Ad esempio potrà essere la lista delle ore, dei giorni o dei mesi.\\
 Nell'asse Y invece sarà presente il numero di raccomandazioni per ogni applicazione slave. Nel caso la granularità mostrata sia oraria sarà presente anche una linea orizzontale che delimita il massimo numero di raccomandazioni effettuabili.\\
-In \hyperref[grafico-quantitativo-mockup]{Figura 3.5} è raffigurato il mockup di quanto si è pensato.
+In \hyperref[grafico-quantitativo-mockup]{Figura 3.5} è raffigurato il mockup di quanto si è pensato.\\
+Abbiamo scelto poi di creare più grafici per fornire informazioni sulle singole applicazioni raccomandative.\\
+Un grafico, principale, che fornisca i dati sui cinquanta contenuti più raccomandati. Questo grafico avrà nell'asse Y i contenuti, possibilmente con una Thumbnail per facilitarne il riconoscimento e nell'asse X la quantità di click e di impression.\\
+Due grafici a lato che mostrino le tag dei contenuti più raccomandati e le tag riguardanti i profili associati ai contenuti più raccomandati.\\
+
 \begin{figure}[H]
 	\centering
 	\label{grafico-quantitativo-mockup}	\includegraphics[width=1.0\textwidth]{images/grafico-quantitativo-mockup.jpg}
 	\caption{Mockup del grafico quantitativo}
 \end{figure} 
-Abbiamo scelto poi di creare più grafici per fornire informazioni sulle singole applicazioni raccomandative.\\
-Un grafico, principale, che fornisca i dati sui cinquanta contenuti più raccomandati. Questo grafico avrà nell'asse Y i contenuti, possibilmente con una Thumbnail per facilitarne il riconoscimento e nell'asse X la quantità di click e di impression.\\
-Due grafici a lato che mostrino le tag dei contenuti più raccomandati e le tag riguardanti i profili associati ai contenuti più raccomandati.\\
 Tutti questi grafici devono essere filtrabili per periodo di tempo, ordinati per impression o per click e in più dev'essere possibile cercare singoli contenuti, questo serve nel caso si sia interessati ad un particolare contenuto che magari non è tra i primi cinquanta in ordine di raccomandazioni.\\
-In \hyperref[grafico-qualitativo-1-mockup]{Figura 3.6} è raffigurato il mockup di quanto si è pensato.
-\begin{figure}[H]
-	\centering
-	\label{grafico-qualitativo-1-mockup}	\includegraphics[width=1.0\textwidth]{images/grafico-qualitativo-1-mockup.jpg}
-	\caption{Mockup della pagina contenente i grafici qualitativi}
-\end{figure} 
+In \hyperref[grafico-qualitativo-1-mockup]{Figura 3.6} è raffigurato il mockup di quanto si è pensato.\\
+ 
 Al click sulla thumbnail di un contenuto far apparire una finestra modale in cui si possano vedere più dettagli del contenuto scelto, tra cui una descrizione, il tipo di utenti a cui è stato raccomandato e che ci hanno cliccato e gli argomenti trattati dagli utenti che hanno cliccato.
 In \hyperref[grafico-qualitativo-2-mockup]{Figura 3.7} è raffigurato il mockup di quanto si è pensato.
 \begin{figure}[H]
 	\centering
+	\label{grafico-qualitativo-1-mockup}	\includegraphics[width=1.0\textwidth]{images/grafico-qualitativo-1-mockup.jpg}
+	\caption{Mockup della pagina contenente i grafici qualitativi}
+\end{figure}
+\begin{figure}[H]
+	\centering
 	\label{grafico-qualitativo-2-mockup}	\includegraphics[width=1.0\textwidth]{images/grafico-qualitativo-2-mockup.jpg}
-	\caption{Mockup del popup da far apparire quansi si preme su una thumbnail}
+	\caption{Mockup del popup da far apparire quando si preme su una thumbnail}
 \end{figure} 
 
 \subsubsection{Progettazione e sviluppo terza fase}
@@ -804,27 +809,28 @@ In \hyperref[grafico-quantitativo]{Figura 3.8} possiamo vedere il grafico che mo
 	\includegraphics[width=1.0\textwidth]{images/grafico-quantitativo.jpg}
 	\caption{Grafico quantitativo visibile all'interno della dashboard di una applicazione raccomandativa master}
 \end{figure}
-In \hyperref[grafico-qualitativo-1]{Figura 3.9} possiamo vedere il grafico che mostra, per una scelta applicazione raccomandativa slave, una diagramma a barre con i valori delle impression e click per vari contenuti. Alla destra abbiamo un riassunto in cui sono mostrate le impression totali dell'applicazione, i click totali e due grafici a tag cloud in cui sono presenti nel primo le tag relativi la classe target dei contenuti, mentre in quello sottostante le tag relativi la classe topic dei contenuti. 
+In \hyperref[grafico-qualitativo-1]{Figura 3.9} possiamo vedere il grafico che mostra, per una scelta applicazione raccomandativa slave, una diagramma a barre con i valori delle impression e click per vari contenuti. Alla destra abbiamo un riassunto in cui sono mostrate le impression totali dell'applicazione, i click totali e due grafici tag cloud in cui sono presenti nel primo le tag relativi la classe target dei contenuti, mentre in quello sottostante le tag relativi la classe topic dei contenuti. 
 \begin{figure}[H]
 	\centering
 	\label{grafico-qualitativo-1}
 	\includegraphics[width=1.0\textwidth]{images/grafico-qualitativo-1.jpg}
 	\caption{Grafico qualitativo visibile all'interno della dashboard di una applicazione raccomandativa slave}
 \end{figure}
-Al click sulla \gloss{thumbnail} di un contenuto viene aperta una pagina modale che possiamo vedere in \hyperref[grafico-qualitativo-2]{Figura 3.10}. 
+Al click sulla \gloss{thumbnail} di un contenuto viene aperta una pagina modale che possiamo vedere in \hyperref[grafico-qualitativo-2]{Figura 3.10}. \\
+
+Nella finestra che viene presentata all'utente si può vedere un riassunto sull'audience dell'utenza a cui è stato proposto il contenuto e che ha espresso interesse.\\
+In particolare oltre ad una descrizione del contenuto e al numero di impression e click ricevuti troviamo informazioni come le tag del contenuto. Sia le tag della classe topic che parlano del contenuto sia quelle della classe target che indicano verso quale tipologia di utenti è orientato il contenuto.\\
+In basso infine è presente un grafico a barre per mostrare un elenco delle tag relative agli utenti a cui è stato proposto il contenuto. Questo è interessante per capire, per le varie tipologie di utenti a cui è stato proposto, quali categorie sono state più interessate.\\
+In basso a destra, invece, un altro grafico a barre che mostra quali tipi di contenuto sono di interesse alle tipologie di utenti a cui è stato proposto il contenuto.\\
+Tutte queste informazioni, oltre a poter dare un indicazione sulla qualità e quantità delle raccomandazioni, può dare spunti per strategie di marketing o di business. Ad esempio può essere interessante vedere che un contenuto che ha come target una certa tipologia di utenti poi susciti interesse non in quella categoria ma bensì in un altra. Potrebbe essere un segnale che indica che la tipologia assegnata non sia quella giusta o che il contenuto sia fuori tema.\\
+
 \begin{figure}[H]
 	\centering
 	\label{grafico-qualitativo-2}
 	\includegraphics[width=1.0\textwidth]{images/grafico-qualitativo-2.jpg}
 	\caption{Finestra modale aperta al click sul primo contenuto del grafico visto in \hyperref[grafico-qualitativo-1]{Figura 3.9}}
 \end{figure}
-Nella finestra che viene presentata all'utente si può vedere un riassunto sull'audience dell'utenza a cui è stato proposto il contenuto e che ha espresso interesse.\\
-In particolare oltre ad una descrizione del contenuto e al numero di impression e click ricevuti troviamo informazioni come le tag del contenuto. Sia le tag della classe topic che parlano del contenuto sia quelle della classe target che indicano verso quale tipologia di utenti è orientato il contenuto.\\
-In basso infine è presente un grafico a barre per mostrare un elenco delle tag relative agli utenti a cui è stato proposto il contenuto. Questo è interessante per capire, per le varie tipologie di utenti a cui è stato proposto, quali categorie sono state più interessate.\\
-In basso a destra, invece, un altro grafico a barre che mostra quali tipi di contenuto sono di interesse alle tipologie di utenti a cui è stato proposto il contenuto.\\
-
-Tutte queste informazioni, oltre a poter dare un indicazione sulla qualità e quantità delle raccomandazioni, può dare spunti per strategie di marketing o di business. Ad esempio può essere interessante vedere che un contenuto che ha come target una certa tipologia di utenti poi susciti interesse non in quella categoria ma bensì in un altra. Potrebbe essere un segnale che indichi che la tipologia assegnata non sia quella giusta o che il contenuto sia fuori tema.\\
-Alla fine di queste attività era finito l'intero periodi di stage per cui non è stato possibile realizzare il meccanismo per la personalizzazione dei widgets di raccomandazione.
+Alla fine di queste attività era finito l'intero periodo di stage per cui non è stato possibile realizzare il meccanismo per la personalizzazione dei widgets di raccomandazione.
 
 \section{Obiettivi raggiunti}
 
@@ -928,7 +934,7 @@ Inoltre grazie ai corsi orientati al lavoro di gruppo, come Ingegneria del Softw
 Riguardo alle competenze tecniche acquisite, ho sviluppato molto la conoscenza su linguaggi di programmazione che già conoscevo come \textit{Scala} e \textit{JavaScript}, utilizzando moltissime librerie e andando a lavorare in progetti non del calibro di quelli universitari.\\
 Le attività che mi hanno colpito e formato maggiormente sono state quelle relative la prima fase. Non avevo nessuna competenza riguardante l'attività di profilazione e di tracciamento degli utenti e devo dire che mi ha sorpreso tantissimo capire come questi sono fatti e quali sono i problemi che sono stati affrontati dall'azienda per rendere possibile un sistema di tracciamenti molto complesso che funzioni in ogni browser. Particolarmente difficile infatti l'implementazione per i browser vecchi come Internet Explorer 9 e quelli non permissivi come Safari.\\
 Ho compreso anche molti aspetti del linguaggio \textit{JavaScript} come il concetto di ereditarietà prototipata e l'uso di tantissime librerie a me prima sconosciute.\\
-Per quanto riguarda la parte server sono stato contento di riutilizzare il linguaggio \textit{Scala} che trovo sia sempre più in crescita grazie alla facilità con sui si riesce ad effettuare scaling orizzontale. In particolar modo mi ha colpito l'utilizzo dei servizi Amazon che non avevo mai compreso appieno non lavorando in progetti che necessitano l'elaborazione di grandi quantità di dati.\\
+Per quanto riguarda la parte server sono stato contento di riutilizzare il linguaggio \textit{Scala} che trovo sia sempre più in crescita grazie alla facilità con sui si riesce ad effettuare scaling orizzontale. In particolar modo mi ha colpito l'utilizzo dei servizi Amazon che non avevo mai compreso a pieno non lavorando in progetti che necessitano l'elaborazione di grandi quantità di dati.\\
 Sono stato molto sorpreso anche dalle attività dell'ultima fase, che pensavo molto più semplici. La manutenzione di un progetto così vasto lato user experience infatti necessità l'utilizzo di framework che non conoscevo e delle rigide regole per evitare che si crei poi molto codice impossibile da riutilizzare o da modificare.\\
 Per ultima cosa, ma sicuramente la più importante, ho apprezzato moltissimo interfacciarmi col mondo del lavoro e capire come effettivamente funzioni un azienda e come si lavori in un team aziendale con molta esperienza. Mi ritengo fortunato che grazie a questo progetto ho dovuto interagire con quattro team differenti andando ad avere quindi nozioni diverse da diverse persone.\\
 
@@ -1051,7 +1057,6 @@ I widgets di cui si parla in questo elaborato sono dei piccoli software JavaScri
 
 \rowcolors{2}{white}{white}
 \begin{tabular}{ m{2em} m{28em} }
-%TODO da fare
 |1| & Cay Horstmann. Scala for impatient. \url{https://horstmann.com/scala}\\
 	& \\
 |2| & Marijn Haverbecke. Eloquent JavaScript. \url{https://eloquentjavascript.net}\\
